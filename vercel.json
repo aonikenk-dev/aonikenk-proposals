@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/proposals/:path*",
+      "destination": "https://aonikenk-proposals.vercel.app/:path*"
+    }
+  ]
+}
