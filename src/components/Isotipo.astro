@@ -1,0 +1,23 @@
+---
+interface Props {
+  size?: number;
+  opacity?: number;
+  class?: string;
+}
+const { size = 24, opacity = 1, class: cls = '' } = Astro.props;
+---
+<svg
+  width={size} height={size}
+  viewBox="0 0 100 100" fill="none"
+  class={cls}
+  style={opacity < 1 ? `opacity:${opacity}` : undefined}
+>
+  <circle cx="50" cy="50" r="46" stroke="#2A3140" stroke-width="1.5"/>
+  <polygon points="50,15 80,68 20,68" fill="none" stroke="#C0623A" stroke-width="2.5" stroke-linejoin="round"/>
+  <line x1="33" y1="49" x2="67" y2="49" stroke="#C0623A" stroke-width="2.5"/>
+  <circle cx="50" cy="78" r="4" fill="#7BAFC4"/>
+  <path d="M13,26 L13,13 L26,13" stroke="#3D6B4F" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M87,26 L87,13 L74,13" stroke="#3D6B4F" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M13,74 L13,87 L26,87" stroke="#3D6B4F" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M87,74 L87,87 L74,87" stroke="#3D6B4F" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

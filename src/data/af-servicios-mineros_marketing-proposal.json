@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "ref_title": "Propuesta Ref. #",
+    "ref": "001",
+    "date": "Mayo 2026",
+    "validity": "30 días",
+    "lang": "es",
+    "currency": "USD",
+    "cover_tag": "Presupuesto · Estrategia de Marketing Digital",
+    "proposal_desc": "Estrategia de Marketing Digital Integral: Branding, Redes Sociales y Sitio Web"
+  },
+
+  "provider": {
+    "name": "aonikenk",
+    "tld": ".dev",
+    "tagline": "Software · Branding · Solutions",
+    "cover_slogan": "Crafted at the edge · 🗻 · ",
+    "slogan": "Crafted at the edge",
+    "email": "hello@aonikenk.dev",
+    "url": "aonikenk.dev",
+    "location": "Patagonia, Argentina"
+  },
+
+  "client": {
+    "name": "AF Servicios Mineros Patagónicos S.R.L.",
+    "location": "Puerto San Julián, Santa Cruz, Argentina"
+  },
+
+  "intro": "El presente presupuesto contempla el desarrollo de una estrategia de comunicación y presencia digital integral para AF Servicios Mineros Patagónicos S.R.L., empresa especializada en servicios de perforación y apoyo minero con base en Puerto San Julián, Santa Cruz. El objetivo es posicionar a la empresa ante potenciales clientes del sector minero argentino y patagónico, destacando su experiencia, capacidad operativa y compromiso con la seguridad y la sustentabilidad.",
+
+  "modules": [
+    {
+      "id": "branding",
+      "num": "01",
+      "title": "Branding e Identidad Visual",
+      "desc": "Desarrollo o actualización de la identidad de marca para reflejar los valores de AF: excelencia operativa, seguridad y raíces patagónicas.",
+      "billing_type": "fixed",
+      "table_title": "BRANDING / IDENTIDAD VISUAL",
+      "items": [
+        { "name": "Auditoría de marca",     "desc": "Análisis del estado actual de la marca; posición de la marca en el mercado; valores de la empresa, tono de voz y personalidad. Investigación del mercado y la competencia", "qty": "1", "price": 80, "show": true, "exclude_from_subtotal": false },
+        { "name": "Naming y Estrategia",  "desc": "Redefinición o ajuste de los valores de la empresa, tono de voz y personalidad.", "qty": "1",    "price": 250, "show": false },
+        { "name": "Identidad visual",   "desc": "Actualización de la identidad visual con versiones primaria, secundaria y monocromática: isotipo, imagotipo, paleta de colores, tipografía, texturas, etc.",             "qty": "1", "price": 130, "show": true, "exclude_from_subtotal": false },
+        { "name": "Manual de marca",        "desc": "Tipografía, paleta, iconografía: usos correctos e incorrectos. Diseño de tarjeta personal, hoja membretada, firma de email, carpeta corporativa", "qty": "1",    "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Identidad digital",  "desc": "Plantillas para posts, stories, highlights, reels, etc. (Instagram/LinkedIn/Facebook)", "qty": "1", "price": 120, "show": true, "exclude_from_subtotal": false }
+      ],
+      "subtotal_label": "Subtotal Branding",
+      "note": "Si el cliente desea mantener la identidad visual (logos, paleta de colores, iconografía, etc.), se pueden omitir los ítems relacionados y ajustar los precios y el subtotal del módulo. El desarrollo de la identidad visual se realizará en estrecha colaboración con el cliente para asegurar que refleje fielmente la esencia de la empresa y sus objetivos comerciales."
+    },
+    {
+      "id": "social",
+      "num": "02",
+      "title": "Gestión de Redes Sociales",
+      "desc": "Gestión mensual de Instagram, Facebook y LinkedIn, los canales más relevantes para la industria minera B2B y para visibilidad regional.",
+      "billing_type": "monthly",      
+      "table_title": "REDES SOCIALES — PRECIO MENSUAL",
+      "items": [
+        { "name": "Estrategia de contenido", "desc": "Auditoría inicial, definición de pilares de contenido, tono de comunicación y cronograma mensual alineado a objetivos de negocio", "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": true  },
+        { "name": "Producción de contenido", "desc": "Cantidad de posts por mes a definir (feed + stories): diseño, copy y hashtags",                        "qty": "1", "price": 200, "show": true, "exclude_from_subtotal": false },
+        { "name": "Gestión de comunidad",    "desc": "Respuesta a mensajes, comentarios y menciones (L–V)",                           "qty": "1", "price": 60, "show": true, "exclude_from_subtotal": false },
+        { "name": "Informe mensual",         "desc": "Reporte de métricas, alcance, engagement y recomendaciones",                    "qty": "1", "price": 30, "show": true, "exclude_from_subtotal": false },
+        { "name": "Plataformas incluidas",   "desc": "Instagram + LinkedIn (Facebook opcional sin costo adicional)",                   "qty": "1",     "price": 0, "show": false, "exclude_from_subtotal": true  }
+      ],
+      "subtotal_label_first_month": "Precio primer mes",
+      "subtotal_label": "Precio mensual (a partir del 2do mes)",
+      "note": "Se pueden agregar servicios adicionales como LinkedIn Ads, producción de video, etc. por un costo extra a definir según necesidades específicas. También se ofrece la opción de contratar por trimestre o semestre con descuentos respectivos."
+    },
+    {
+      "id": "web",
+      "num": "03",
+      "title": "Landing Page / Sitio Web",
+      "desc": "Desarrollo de un sitio web profesional, moderno y optimizado para SEO que sirva como carta de presentación ante nuevos clientes y empresas mineras de la región. El sitio incluirá secciones clave como Inicio, Servicios, Proyectos, Sobre Nosotros, Contacto, etc. con un diseño responsive para una experiencia óptima en desktop y mobile, y alineado con el manual de marca y la identidad visual definida.",
+      "billing_type": "fixed",
+      "table_title": "LANDING PAGE / SITIO WEB",
+      "items": [
+        { "name": "Prototipo",      "desc": "Boceto inicial del diseño para validarlo con el cliente",                         "qty": "1", "price": 20, "show": true, "exclude_from_subtotal": false },
+        { "name": "Diseño UI",              "desc": "Diseño visual responsive (desktop + mobile) acorde al manual de marca",            "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Arquitectura y UX",      "desc": "Wireframes, estructura de navegación y flujo de usuario",                         "qty": "1", "price": 60, "show": true, "exclude_from_subtotal": false },
+        { "name": "Desarrollo web",         "desc": "Implementación, formulario de contacto y SEO on-page. Sección de blog o noticias.", "qty": "1", "price": 250, "show": true, "exclude_from_subtotal": false },
+        { "name": "Copywriting",            "desc": "Redacción profesional de todas las secciones del sitio",                          "qty": "1", "price": 250, "show": false, "exclude_from_subtotal": true },
+        { "name": "Integración RRSS",       "desc": "Links, feeds y pixel de seguimiento",                                             "qty": "1", "price": 50, "show": true, "exclude_from_subtotal": false },
+        { "name": "Capacitación y entrega", "desc": "Manual de uso y sesión de traspaso al cliente",                                  "qty": "1", "price": 20, "show": true, "exclude_from_subtotal": false }
+      ],
+      "subtotal_label": "Subtotal Landing Page",
+      "note": "El desarrollo se realizará en una plataforma que facilite futuras actualizaciones requeridas por el cliente. El costo de hosting y dominio no está incluido pero se puede gestionar por un costo adicional si el cliente lo requiere."}
+  ],
+
+  "totals": {
+    "subtotal":          { "label": "Subtotal general (módulos + extras)", "value": "USD 5.100" },
+    "discount":          { "label": "Descuento paquete integral (10%)",  "percent": "10" },
+    "extras":             { "label": "Extras primer mes",                "value": "100" },
+    "total":             { "label": "TOTAL DEL PROYECTO",                "value": "4.590" },
+    "notes": [
+      "El total incluye un 10% de descuento por contratación del paquete integral (Branding + Redes + Landing Page).",
+      "El precio de Redes Sociales corresponde al primer trimestre. A partir del mes 4 se renueva con un incremento al valor mensual."
+    ]
+  },
+
+  "conditions": [
+    { "key": "Forma de pago",    "value": "50% al inicio del proyecto · 50% contra entrega de cada módulo" },
+    { "key": "Plazos",           "value": "Branding: 3 semanas · Landing Page (sitio web): 3–4 semanas · Redes: 1 semana" },
+    { "key": "Revisiones",       "value": "2 rondas de revisión incluidas por módulo" },
+    { "key": "Derechos",         "value": "El cliente recibe todos los archivos fuente y derechos sobre los materiales" },
+    { "key": "Hosting (servidor)",        "value": "No incluido. Costo anual estimado: USD 80–150 (se coordina con el cliente)" },
+    { "key": "Validez",          "value": "Este presupuesto tiene validez de 30 días desde su emisión (Mayo 2026)" }
+  ]
+}

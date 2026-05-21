@@ -1,0 +1,68 @@
+---
+interface Item {
+  name: string;
+  desc: string;
+  qty: string;
+  price: number;
+  show: boolean;
+  exclude_from_subtotal?: boolean;
+}
+interface Props {
+  num: string;
+  title: string;
+  desc: string;
+  table_title: string;
+  items: Item[];
+  subtotal_label: string;
+  currency: string;
+  subtotal: number;
+  subtotal_first_month: number;
+  subtotal_label_first_month?: string;
+  note?: string;
+}
+const { num, title, desc, table_title, items, subtotal, subtotal_first_month, subtotal_label_first_month, subtotal_label, note, currency } = Astro.props;
+---
+
+<div class="s-header reveal">
+  <div class="s-eyebrow"><span>Módulo {num}</span></div>
+  <h2 class="s-title">{title}</h2>
+  <p class="s-desc">{desc}</p>
+</div>
+
+<table class="srv-table reveal">
+  <tr class="t-head-section">
+    <td colspan="4">{table_title}</td>
+  </tr>
+  <tr class="t-head-cols">
+    <th>Servicio / Entregable</th>
+    <th>Descripción</th>
+    <th>Cant.</th>
+    <th>Precio ({currency})</th>
+  </tr>
+  <tbody>
+    {items.map(item => (
+      item.show &&
+      <tr>
+        <td>{item.name}</td>
+        <td>{item.desc}</td>
+        <td>{item.qty}</td>
+        <td>{item.price.toFixed(2)}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<div class="subtotal-line reveal">
+  {subtotal_label_first_month &&
+    <>
+      <span class="subtotal-label">{subtotal_label_first_month}:</span>
+      <span class="subtotal-val">{currency} {subtotal_first_month.toFixed(2)}</span>
+    </>
+  }
+  <span class="subtotal-label">{subtotal_label}:</span>
+  <span class="subtotal-val">{currency} {subtotal.toFixed(2)}</span>
+</div>
+
+{note && <p class="module-note reveal">* {note}</p>}
+
+<div class="rule"></div>

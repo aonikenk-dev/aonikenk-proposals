@@ -1,0 +1,44 @@
+---
+import Isotipo from './Isotipo.astro';
+interface Props {
+  provider: { name:string; tld:string; email:string; location:string; url:string; };
+  client:   { name:string; location:string; };
+}
+const { provider, client } = Astro.props;
+---
+
+<div class="firm-grid reveal">
+
+  <div class="firm-block">
+    <div class="firm-header">
+      <div class="firm-participant">
+        Proveedor
+      </div>
+      <div class="firm-name">
+        <Isotipo size={20} />
+        <div class="ft-logo"> {provider.name}<span class="dot">{provider.tld}</span> </div>
+      </div>
+      <div class="firm-sub"><a href={`https://${provider.url}`} target="_blank" rel="noopener noreferrer">{provider.url}</a> · {provider.location}</div>
+    </div>
+    <div class="firm-signature">
+      <div class="firm-line"></div>
+      <div class="firm-label">Firma</div>
+    </div>
+  </div>
+
+  <div class="firm-block">
+    <div class="firm-header">
+      <div class="firm-participant">
+        Cliente
+      </div>
+      <div class="firm-client-name">
+        {client.name}
+      </div>
+      <div class="firm-sub">{client.location}</div>
+    </div>
+    <div class="firm-signature">
+      <div class="firm-line"></div>
+      <div class="firm-label">Firma, aclaración y fecha</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+﻿---
+import ProposalLayout     from '../layouts/ProposalLayout.astro';
+
+// ── Server-side logic ─────────────────────────────────────────
+const COOKIE_NAME = 'aonikenk_auth';
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
+
+const redirect  = Astro.url.searchParams.get('redirect') || '/';
+let error       = false;
+let errorMsg    = '';
+
+if (Astro.request.method === 'POST') {
+  const body      = await Astro.request.text();
+  const form      = new URLSearchParams(body);
+  const code      = (form.get('code') ?? '').trim();
+  const slug      = redirect.replace('/proposals/', '').split('/')[0] ?? 'default';
+  const envKey    = `PROPOSAL_CODE_${slug.toUpperCase().replace(/-/g, '_')}`;
+  const validCode = import.meta.env[envKey] ?? import.meta.env.PROPOSAL_CODE_DEFAULT ?? '';
+
+  if (!validCode) {
+    // Env var not configured — fail safe
+    error    = true;
+    errorMsg = 'Acceso no configurado. Contactá a aonikenk.dev.';
+  } else if (code === validCode) {
+    // ✅ Valid — set httpOnly cookie and redirect
+    Astro.cookies.set(COOKIE_NAME, validCode, {
+      httpOnly : true,
+      secure   : true,
+      sameSite : 'lax',
+      maxAge   : COOKIE_MAX_AGE,
+      path     : '/',
+    });
+    return Astro.redirect(redirect, 302);
+  } else {
+    error    = true;
+    errorMsg = 'Código incorrecto. Verificá e intentá de nuevo.';
+  }
+}
+---
+
+<ProposalLayout title="Acceso — aonikenk.dev">
+  <div class="login-page">
+    <div class="bg-glow"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-isotipo">
+      <svg width="380" height="380" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="#C0623A" stroke-width=".6"/>
+        <polygon points="50,15 80,68 20,68" fill="none" stroke="#C0623A" stroke-width="1" stroke-linejoin="round"/>
+        <line x1="33" y1="49" x2="67" y2="49" stroke="#C0623A" stroke-width="1"/>
+        <circle cx="50" cy="78" r="2" fill="#7BAFC4"/>
+        <path d="M13,26 L13,13 L26,13" stroke="#3D6B4F" stroke-width=".8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M87,26 L87,13 L74,13" stroke="#3D6B4F" stroke-width=".8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13,74 L13,87 L26,87" stroke="#3D6B4F" stroke-width=".8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M87,74 L87,87 L74,87" stroke="#3D6B4F" stroke-width=".8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <svg class="bg-terrain" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points="0,140 180,100 360,120 540,65 720,90 900,42 1080,70 1260,24 1440,46 1440,180 0,180" fill="none" stroke="#C0623A" stroke-width="1"/>
+      <polyline points="0,160 220,138 440,152 660,120 880,140 1100,108 1320,128 1440,96 1440,180 0,180" fill="none" stroke="#3D6B4F" stroke-width="1"/>
+    </svg>
+
+    <div class="card">
+      <div class="lockup">
+        <svg width="64" height="64" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="46" stroke="#2A3140" stroke-width="1.2"/>
+          <polygon points="50,15 80,68 20,68" fill="none" stroke="#C0623A" stroke-width="2.2" stroke-linejoin="round"/>
+          <line x1="33" y1="49" x2="67" y2="49" stroke="#C0623A" stroke-width="2.2"/>
+          <circle cx="50" cy="78" r="3.5" fill="#7BAFC4"/>
+          <path d="M13,26 L13,13 L26,13" stroke="#3D6B4F" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M87,26 L87,13 L74,13" stroke="#3D6B4F" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13,74 L13,87 L26,87" stroke="#3D6B4F" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M87,74 L87,87 L74,87" stroke="#3D6B4F" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="lockup-wordmark">aonikenk<span class="dot">.dev</span></div>
+        <div class="lockup-tagline">Software · Branding · Solutions</div>
+        <div class="lockup-slogan">Crafted at the edge</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="access-label">Acceso a presupuesto</div>
+
+      <form method="POST" enctype="application/x-www-form-urlencoded" id="login-form">
+        <input type="hidden" name="redirect" value={redirect} />
+
+        <div class="input-group">
+          <label class="input-label" for="code">Ingrese el código de acceso proporcionado por su asesor</label>
+          <div class="input-wrap">
+            <input
+              id="code"
+              name="code"
+              type="password"
+              class="code-input"
+              placeholder="· · · · · · · ·"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              autofocus
+              required
+              maxlength="15"
+            />
+            <button type="button" class="toggle-vis" id="toggle-vis" aria-label="Mostrar/ocultar código">
+              <svg id="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {error && (
+          <div class="error-msg" role="alert">{errorMsg}</div>
+        )}
+
+        <button type="submit" class="btn-submit">Acceder →</button>
+      </form>
+
+      <p class="login-note">
+        Documento confidencial preparado por <a href="mailto:hello@aonikenk.dev">aonikenk.dev</a>.<br/>
+        Si no tiene el código de acceso, contacte a su asesor.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('code');
+    const toggle = document.getElementById('toggle-vis');
+    const eyeIcon = document.getElementById('eye-icon');
+
+    const eyeOpen = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+    const eyeOff = `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`;
+
+    toggle?.addEventListener('click', () => {
+      if (!input || !eyeIcon) return;
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      eyeIcon.innerHTML = isPassword ? eyeOff : eyeOpen;
+    });
+
+    const errorEl = document.querySelector('.error-msg');
+    if (errorEl) {
+      document.getElementById('code')?.focus();
+    }
+  </script>
+
+  <style lang="scss" is:global>
+    @use '../styles/login.scss';
+  </style>
+</ProposalLayout>

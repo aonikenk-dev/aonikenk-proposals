@@ -1,0 +1,19 @@
+---
+interface Condition { key: string; value: string; }
+interface Props { conditions: Condition[]; }
+const { conditions } = Astro.props;
+---
+
+<div class="s-header reveal">
+  <div class="s-eyebrow"><span>Condiciones</span></div>
+  <h2 class="s-title">Condiciones Comerciales</h2>
+</div>
+
+<table class="cond-table reveal">
+  {conditions.map(c => (
+    <tr>
+      <td>{c.key}</td>
+      <td>{c.value}</td>
+    </tr>
+  ))}
+</table>

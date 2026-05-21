@@ -1,0 +1,84 @@
+---
+import Isotipo from './Isotipo.astro';
+interface Props {
+  provider: { name:string; tld:string; tagline:string; cover_slogan:string; location:string; };
+  client:   { name:string; location:string; };
+  meta:     { ref:string; date:string; validity:string; cover_tag:string; currency:string; };
+  totalValue: string;
+}
+const {
+  provider, client, meta, totalValue
+} = Astro.props;
+---
+
+<section id="cover">
+  <div class="cover-bg"></div>
+  <!-- <div class="cover-grid"></div> -->
+
+  <!-- large background isotipo -->
+  <!-- <div class="cover-iso-bg">
+    <Isotipo size={420} opacity={1} />
+  </div> -->
+
+  <!-- terrain lines -->
+  <svg class="cover-terrain" viewBox="0 0 1440 200" preserveAspectRatio="none" aria-hidden="true">
+    <polyline points="0,160 180,115 360,138 540,78 720,104 900,52 1080,82 1260,32 1440,56 1440,200 0,200" fill="none" stroke="#C0623A" stroke-width="1"/>
+    <polyline points="0,178 220,155 440,170 660,138 880,158 1100,122 1320,144 1440,112 1440,200 0,200" fill="none" stroke="#3D6B4F" stroke-width="1"/>
+  </svg>
+
+  <div class="cover-content">
+    <div class="cover-isotipo">
+      <Isotipo size={90} />
+    </div>
+
+    
+    <!-- lockup: name.tld -->
+    <div class="cover-title">      
+      {provider.name}<span class="dot">{provider.tld}</span>
+    </div>
+    <div class="cover-sub">{provider.tagline}</div>
+    
+    <div style="margin-top:18px;">
+      <span class="cover-slogan">{provider.cover_slogan}</span>      
+      <span class="cover-location">{provider.location}</span>
+    </div>
+    
+    <div class="cover-divider"></div>
+    
+    <div class="cover-tag">{meta.cover_tag}</div>
+    <div class="cover-for">Preparado para</div>
+    <div class="cover-client">{client.name}</div>
+    <div class="cover-client-location">{client.location}</div>
+
+    <div class="cover-meta-row">
+      <div class="cover-meta-item">
+        <span class="lbl">Fecha</span>
+        <span class="val">{meta.date}</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="lbl">Referencia</span>
+        <span class="val">#{meta.ref}</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="lbl">Validez</span>
+        <span class="val">{meta.validity}</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="lbl">Total</span>
+        <span class="val" style="color:var(--sienna);font-weight:800">
+          {meta.currency} {totalValue}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <a href="#content" class="cover-arrow">
+    <span class="arrow-lbl">ver presupuesto</span>
+    <div class="arrow-c">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <polyline points="19,12 12,19 5,12"/>
+      </svg>
+    </div>
+  </a>
+</section>

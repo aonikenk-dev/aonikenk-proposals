@@ -1,0 +1,70 @@
+@use 'tokens' as *;
+@use 'animations';
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--obsidian);
+  color: var(--body);
+  font-family: $font-mono;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+  &.in { opacity:1; transform:translateY(0); }
+  &.d1 { transition-delay:.08s; }
+  &.d2 { transition-delay:.18s; }
+}
+
+// ── Shared section layout ─────────────────────────────────────
+.p-inner { max-width: 960px; margin: 0 auto; padding: 0 48px; }
+
+.s-header  { margin-bottom: 40px; padding-top: 56px; }
+
+.s-eyebrow {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+  &::before { content:''; display:inline-block; width:24px; height:1px; background:var(--sienna); }
+  span { font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:var(--sienna); }
+}
+
+.s-title {
+  font-family: $font-display;
+  font-weight: 800;
+  font-size: clamp(22px, 3vw, 30px);
+  color: var(--white);
+  letter-spacing: -0.03em;
+}
+
+.s-desc {
+  font-size: 12px; color: var(--muted); line-height: 1.9;
+  margin-top: 10px; max-width: 700px; text-align: justify;
+}
+
+.rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--sienna) 0%, var(--ice) 60%, transparent 100%);
+  margin: 0 0 40px;
+}
+
+// ── Buttons ───────────────────────────────────────────────────
+.btn-print {
+  font-family: $font-mono;
+  font-size: 10px; letter-spacing:.15em; text-transform:uppercase;
+  color: var(--sienna); border: 1px solid var(--sienna);
+  padding: 7px 16px; cursor: none; text-decoration: none;
+  transition: background .2s, color .2s;
+  &:hover { background: var(--sienna); color: var(--white); }
+}
+
+// ── Responsive ────────────────────────────────────────────────
+@media(max-width: $bp-mobile) {
+  .p-inner { padding: 0 24px; }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "aonikenk-proposals",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/vercel": "^8.0.4",
+    "astro": "^6.3.3",
+    "sass": "^1.70.0"
+  }
+}

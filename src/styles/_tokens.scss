@@ -1,0 +1,50 @@
+// ── Brand tokens ─────────────────────────────────────────────
+$obsidian : #0D0F12;
+$carbon   : #161A20;
+$slate    : #1E242D;
+$border   : #2A3140;
+$muted    : #4A5568;
+$subtle   : #8896A8;
+$body     : #C8D4E0;
+$white    : #EEF3F8;
+$sienna   : #C0623A;
+$ember    : #E07A52;
+$moss     : #3D6B4F;
+$ice      : #7BAFC4;
+
+// ── Light variant (on-light / print) ─────────────────────────
+$light-bg     : #F0F4F8;
+$light-text   : #0D0F12;
+$light-muted  : #4A5568;
+$light-border : #D0D8E4;
+$light-subtle : #8896A8;
+$light-card   : #E4EAF2;
+
+// ── CSS custom properties ─────────────────────────────────────
+:root {
+  --obsidian    : #{$obsidian};
+  --carbon      : #{$carbon};
+  --slate       : #{$slate};
+  --border      : #{$border};
+  --muted       : #{$muted};
+  --subtle      : #{$subtle};
+  --body        : #{$body};
+  --white       : #{$white};
+  --sienna      : #{$sienna};
+  --ember       : #{$ember};
+  --moss        : #{$moss};
+  --ice         : #{$ice};
+  --light-bg    : #{$light-bg};
+  --light-text  : #{$light-text};
+  --light-muted : #{$light-muted};
+  --light-border: #{$light-border};
+  --light-subtle: #{$light-subtle};
+  --light-card  : #{$light-card};
+}
+
+// ── Typography ────────────────────────────────────────────────
+$font-display : 'Syne', sans-serif;
+$font-mono    : 'DM Mono', monospace;
+
+// ── Breakpoints ───────────────────────────────────────────────
+$bp-mobile : 700px;

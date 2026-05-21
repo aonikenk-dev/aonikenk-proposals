@@ -1,0 +1,31 @@
+---
+import Isotipo from './Isotipo.astro';
+interface Props {
+  provider: { name:string; tld:string; tagline:string; slogan:string; location:string; };
+  client:   { name:string; };
+  meta:     { ref:string; ref_title:string; date:string; };
+}
+const { provider, client, meta } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class="p-footer">
+  <div class="ft-lockup">
+    <div class="ft-imagotipo">
+      <Isotipo size={20} />
+      <div class="ft-logo">
+        {provider.name}<span class="dot">{provider.tld}</span>
+      </div>
+    </div>
+    <div class="ft-slogan">{provider.slogan}.</div>
+  </div>
+
+  <div class="ft-copy" id="copy-year">
+    © {year} · {provider.location}
+  </div>
+
+  <div class="ft-copy">
+    {meta.ref_title}{meta.ref} · {meta.date}<br />
+    {client.name}
+  </div>
+</footer>

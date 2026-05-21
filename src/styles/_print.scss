@@ -1,0 +1,94 @@
+@use 'tokens' as *;
+
+@media print {
+  * { print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+
+  body { cursor:auto; background:$light-bg !important; color:$light-text !important; font-size:11px; }
+
+  // ── Hide screen chrome
+  #cur, #ring, #copy-year, .p-nav, .cover-arrow,
+  .cover-bg, .cover-grid, .cover-iso-bg { display:none !important; }
+
+  // ── Un-animate everything
+  .reveal,
+  .cover-isotipo, .cover-tag, .cover-title, .cover-sub,
+  .cover-slogan, .cover-divider, .cover-for, .cover-client,
+  .cover-location, .cover-meta-row {
+    opacity:1 !important; animation:none !important; transform:none !important;
+  }
+
+  // ── Cover — light bg, page break after
+  #cover {
+    min-height: 100vh;
+    background: $light-bg !important;
+    padding: 60px 48px;
+    page-break-after: always;
+    border-bottom: 3px solid $sienna;
+  }
+  .cover-tag      { color:$sienna !important; }
+  .cover-title    { color:$light-text !important; }
+  .cover-title .dot { color:$sienna !important; }
+  .cover-sub      { color:$light-muted !important; }
+  .cover-slogan   { color:$light-subtle !important; }
+  .cover-divider  { background:$light-border !important; }
+  .cover-for,
+  .cover-location { color:$light-muted !important; }
+  .cover-client   { color:$light-text !important; }
+  .cover-meta-item .lbl { color:$light-muted !important; }
+  .cover-meta-item .val { color:$light-text !important; }
+  .cover-terrain  { display:block !important; opacity:.04; }
+
+  // ── Content pages
+  #content { background:$light-bg !important; padding-bottom: 50px !important;}
+  .s-title  { color:$light-text !important; }
+  .s-eyebrow span { color:$sienna !important; }
+  .s-eyebrow::before { background:$sienna !important; }
+  .s-desc   { color:$light-muted !important; }
+  // .s-header { margin-bottom: 15px !important; }
+  .rule { background:linear-gradient(90deg, $sienna 0%, $ice 50%, transparent 100%) !important; opacity:.5; margin: 0 0 3px !important;}
+
+  // ── Tables
+  .srv-table, .total-table, .cond-table, .s-modules { page-break-inside:avoid; }
+
+  .srv-table .t-head-section td { background:$light-text !important; color:$light-bg !important; border:1px solid $sienna !important; }
+  .srv-table .t-head-cols th    { background:$light-card !important; color:$light-muted !important; border:1px solid $light-border !important; }
+  .srv-table td                 { background:$light-bg !important; color:$light-text !important; border:1px solid $light-border !important; }
+  .srv-table tbody tr:nth-child(odd)  td { background:$light-card !important; }
+  .srv-table td:first-child     { color:$light-text !important; }
+  .srv-table td:nth-child(3)    { color:$light-muted !important; }
+
+  .subtotal-label { color:$light-muted !important; }
+  .subtotal-val   { color:$sienna !important; }
+  .module-note    { color:$light-muted !important; }
+
+  .total-table td             { border:1px solid $light-border !important; }
+  .total-table .row-sub  td   { background:$light-card !important; color:$light-text !important; }
+  .total-table .row-disc td   { background:#fdf0eb !important; color:$sienna !important; }
+  .total-table .row-total td  { background:$light-text !important; color:$light-bg !important; }
+  .total-note { color:$light-muted !important; }
+
+  .cond-table td              { border:1px solid $light-border !important; color:$light-text !important; }
+  .cond-table tr:nth-child(odd)  td { background:$light-card !important; }
+  .cond-table tr:nth-child(even) td { background:$light-bg !important; }
+  .cond-table td:first-child  { color:$sienna !important; }
+
+  // ── Signatures
+  .firm-grid  { page-break-inside:avoid; border-top:1px solid $light-border !important; }
+  .firm-name { color:$light-text !important; }
+  .firm-client-name { color:$light-text !important; }
+  .firm-name .dot { color:$sienna !important; }
+  .firm-sub   { color:$light-muted !important; }
+  .firm-header   { height: 135% !important; }
+  .firm-block { gap:90px !important; }
+  .firm-line  { background:$light-border !important; }
+  .firm-label { color:$light-muted !important; }
+  .firm-participant { color:$light-muted !important; }
+
+  // ── Footer
+  .p-footer   { background:$light-bg !important; border-top:1px solid $light-border !important; }
+  .ft-logo    { color:$light-text !important; }
+  .ft-logo .dot { color:$sienna !important; }
+  .ft-tagline { color:$light-muted !important; }
+  .ft-slogan  { color:$light-subtle !important; }
+  .ft-copy    { color:$light-muted !important; }
+}

@@ -1,0 +1,59 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Presupuesto — aonikenk.dev',
+  description = 'Propuesta comercial preparada por aonikenk.dev',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <!-- Prevent indexing of client proposals -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>{title}</title>
+
+  <!-- Favicon -->
+  <link rel="icon"             href="/favicon.ico" sizes="48x48" />
+  <link rel="icon"             href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div id="cur"></div>
+  <div id="ring"></div>
+
+  <!-- Page content injected here -->
+  <slot />
+
+  <!-- Boot scripts -->
+  <script>
+    import { initCursor } from '../scripts/cursor.js';
+    import { initReveal } from '../scripts/reveal.js';
+
+    initCursor();
+    initReveal();
+
+    // Sticky nav on scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('p-nav')?.classList.toggle('scrolled', scrollY > 60);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
+
+<style lang="scss" is:global>
+  @use '../styles/main.scss';
+</style>

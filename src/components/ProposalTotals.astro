@@ -1,0 +1,50 @@
+---
+interface Totals {
+  modules: { num: string; title: string; subtotal: number }[];
+  subtotal: { label:string; value:number; };
+  extras: { label:string; value:number; };
+  discount: { label:string; value:number; };
+  total:    { label:string; value:number; };
+  notes: string[];
+}
+interface Props { totals: Totals; currency: string; }
+const { totals, currency } = Astro.props;
+---
+
+<div class="s-header reveal">
+  <div class="s-eyebrow"><span>Resumen</span></div>
+  <h2 class="s-title">Total del proyecto</h2>
+</div>
+
+<table class="total-table reveal">
+  {
+    totals.modules.map(mod => (
+      <tr class="row-sub">
+        <td>Subtotal {mod.num} - {mod.title}</td>
+        <td>{currency} {mod.subtotal.toFixed(2)}</td>
+      </tr>
+    ))
+  }
+  <tr class="row-sub">
+    <td>{totals.extras.label}</td>
+    <td>{currency} {totals.extras.value.toFixed(2)}</td>
+  </tr>
+  <tr class="row-sub">
+    <td>{totals.subtotal.label}</td>
+    <td>{currency} {(totals.subtotal.value + totals.extras.value).toFixed(2)}</td>
+  </tr>
+  <tr class="row-disc">
+    <td>{totals.discount.label}</td>
+    <td>- {currency} {((totals.subtotal.value + totals.extras.value) * totals.discount.value / 100).toFixed(2)}</td>
+  </tr>
+  <tr class="row-total">
+    <td>{totals.total.label}</td>
+    <td>{currency} {totals.total.value.toFixed(2)}</td>
+  </tr>
+</table>
+
+{totals.notes.map(note => (
+  <p class="total-note reveal">* {note}</p>
+))}
+
+<div class="rule" style="margin-top:40px"></div>

@@ -1,0 +1,21 @@
+---
+import Isotipo from './Isotipo.astro';
+interface Props {
+  name: string;
+  tld: string;
+  ref: string;
+  date: string;
+}
+const { name, tld, ref, date } = Astro.props;
+---
+
+<nav class="p-nav" id="p-nav">
+  <a href="#cover" class="p-nav-left">
+    <Isotipo size={24} />
+    <div class="p-nav-wm">{name}<span class="dot">{tld}</span></div>
+  </a>
+  <div class="p-nav-meta">Ref. #{ref} · {date}</div>
+  <a href="#" class="btn-print" onclick="window.print();return false;">
+    Imprimir / PDF
+  </a>
+</nav>
