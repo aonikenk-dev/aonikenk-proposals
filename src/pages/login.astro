@@ -10,12 +10,15 @@ let error       = false;
 let errorMsg    = '';
 
 if (Astro.request.method === 'POST') {
+  debugger;
   const body      = await Astro.request.text();
   const form      = new URLSearchParams(body);
   const code      = (form.get('code') ?? '').trim();
   const slug      = redirect.replace('/proposals/', '').split('/')[0] ?? 'default';
   const envKey    = `PROPOSAL_CODE_${slug.toUpperCase().replace(/-/g, '_')}`;
   const validCode = import.meta.env[envKey] ?? import.meta.env.PROPOSAL_CODE_DEFAULT ?? '';
+  console.log(import.meta.env); // Debug log to check available env vars
+  console.log(`Login attempt for slug "${slug}" with code "${code}". Valid code is "${validCode}".`); // Debug log
 
   if (!validCode) {
     // Env var not configured — fail safe
