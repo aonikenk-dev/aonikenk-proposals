@@ -13,7 +13,7 @@ Built with **Astro** · **SCSS** · **JSON data files**.
 |------|---------|
 | [Astro](https://astro.build) | Static site, routing, components |
 | Sass/SCSS | Brand styling with tokens + print variant |
-| `src/data/*.json` | All proposal content (client, pricing, modules) |
+| `src/data/clients/[client-name]/*.json` | All proposal content (client, pricing, modules) |
 
 ---
 
@@ -33,13 +33,16 @@ aonikenk-proposals/
 │   │   ├── ProposalSignatures.astro# Provider + client signature blocks
 │   │   └── ProposalFooter.astro    # Footer lockup (isotipo + tagline + slogan)
 │   ├── data/
-│   │   └── *.json                  # ← One JSON file per proposal
+|   |   └── clients/
+|   |   |   └── af-servicios-mineros/
+|   │   │   |   └── *.json                  # ← One JSON file per proposal
 │   ├── layouts/
 │   │   └── ProposalLayout.astro    # HTML shell: <head>, cursor, scripts
 │   ├── pages/
 │   │   ├── index.astro             # Redirects to latest proposal
 │   │   └── proposals/
-│   │       └── af-servicios-mineros.astro  # One .astro file per proposal
+|   |       └── af-servicios-mineros/
+│   │           └── marketing.proposal.astro  # One .astro file per proposal
 │   ├── scripts/
 │   │   ├── cursor.js               # Custom cursor
 │   │   └── reveal.js               # Scroll reveal
@@ -59,8 +62,9 @@ aonikenk-proposals/
 
 ### 1. Duplicate the data file
 ```bash
-cp src/data/af-servicios-mineros_marketing-proposal.json \
-   src/data/new-client_project-name.json
+cp src/data/clients/[client-name]/af-servicios-mineros_marketing-proposal.json \
+   src/data/clients/[client-name]/new-client_proposal-name.json
+
 ```
 
 ### 2. Edit the JSON
