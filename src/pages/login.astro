@@ -14,8 +14,8 @@ if (Astro.request.method === 'POST') {
   const body      = await Astro.request.text();
   const form      = new URLSearchParams(body);
   const code      = (form.get('code') ?? '').trim();
-  const slug      = redirect.replace('/proposals/', '').split('/')[0] ?? 'default';
-  const envKey    = `PROPOSAL_CODE_${slug.toUpperCase().replace(/-/g, '_')}`;
+  const slug      = redirect.replace('/proposals/', '') ?? 'default';
+  const envKey    = `PROPOSAL_CODE_${slug.toUpperCase().replace(/[-\/]/g, '_')}`;
   const validCode = process.env[envKey] ?? process.env.PROPOSAL_CODE_DEFAULT ?? '';
 
   if (!validCode) {

@@ -1,20 +1,20 @@
 ---
-import ProposalLayout     from '../../layouts/ProposalLayout.astro';
-import ProposalNav        from '../../components/ProposalNav.astro';
-import ProposalCover      from '../../components/ProposalCover.astro';
-import ProposalModule     from '../../components/ProposalModule.astro';
-import ProposalTotals     from '../../components/ProposalTotals.astro';
-import ProposalConditions from '../../components/ProposalConditions.astro';
-import ProposalSignatures from '../../components/ProposalSignatures.astro';
-import ProposalFooter     from '../../components/ProposalFooter.astro';
+import ProposalLayout     from '../../../layouts/ProposalLayout.astro';
+import ProposalNav        from '../../../components/ProposalNav.astro';
+import ProposalCover      from '../../../components/ProposalCover.astro';
+import ProposalModule     from '../../../components/ProposalModule.astro';
+import ProposalTotals     from '../../../components/ProposalTotals.astro';
+import ProposalConditions from '../../../components/ProposalConditions.astro';
+import ProposalSignatures from '../../../components/ProposalSignatures.astro';
+import ProposalFooter     from '../../../components/ProposalFooter.astro';
 
 // ── Import data from JSON ─────────────────────────────────────
 // To create a new proposal: duplicate this file and change the import below.
-import data from '../../data/af-servicios-mineros_marketing-proposal.json';
+import data from '../../../data/clients/af-servicios-mineros/marketing-proposal.json';
 
 // ── Auth guard ────────────────────────────────────────────────
 const COOKIE_NAME = 'aonikenk_auth';
-const slug        = 'AF_SERVICIOS_MINEROS';
+const slug        = 'AF_SERVICIOS_MINEROS_MARKETING_PROPOSAL';
 const validCode = process.env[`PROPOSAL_CODE_${slug}`]
                ?? process.env.PROPOSAL_CODE_DEFAULT;
 const cookie      = Astro.cookies.get(COOKIE_NAME);
@@ -169,7 +169,7 @@ modules.map(mod => {
 </ProposalLayout>
 
 <style lang="scss">
-  @use '../../styles/tokens' as *;
+  @use '../../../styles/tokens' as *;
 
   #content {
     padding: 0 0 100px;
