@@ -14,8 +14,8 @@ import data from '../../../data/clients/af-servicios-mineros/erp-cloud-proposal.
 // ── Auth guard ────────────────────────────────────────────────
 const COOKIE_NAME = 'aonikenk_auth';
 const slug        = 'AF_SERVICIOS_MINEROS_ERP_CLOUD_PROPOSAL';
-const validCode   = import.meta.env[`PROPOSAL_CODE_${slug}`]
-                 ?? import.meta.env.PROPOSAL_CODE_DEFAULT;
+const validCode   = process.env[`PROPOSAL_CODE_${slug}`]
+                 ?? process.env.PROPOSAL_CODE_DEFAULT;
 const cookie      = Astro.cookies.get(COOKIE_NAME);
 
 if (!cookie || !validCode || cookie.value !== validCode) {
