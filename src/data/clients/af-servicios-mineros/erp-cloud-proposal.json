@@ -1,0 +1,193 @@
+{
+  "meta": {
+    "ref_title": "Propuesta Ref. #",
+    "ref": "001",
+    "date": "Mayo 2026",
+    "validity": "30 días",
+    "lang": "es",
+    "currency": "USD",
+    "cover_tag": "Presupuesto · Sistema ERP Cloud",
+    "proposal_desc": "desarrollo de sistema ERP Cloud"
+  },
+
+  "provider": {
+    "name": "aonikenk",
+    "tld": ".dev",
+    "tagline": "Software · Branding · Solutions",
+    "cover_slogan": "Crafted at the edge · 🗻 · ",
+    "slogan": "Crafted at the edge",
+    "email": "hello@aonikenk.dev",
+    "url": "aonikenk.dev",
+    "location": "Patagonia, Argentina"
+  },
+
+  "client": {
+    "name": "AF Servicios Mineros Patagónicos S.R.L.",
+    "location": "Puerto San Julián, Santa Cruz, Argentina"
+  },
+
+  "intro": "El presente presupuesto contempla el diseño, desarrollo e implementación de un sistema ERP Cloud a medida para AF Servicios Mineros Patagónicos S.R.L. La empresa gestiona actualmente sus operaciones mediante planillas Excel y documentos aislados, lo que genera información dispersa, riesgos de inconsistencia y limitaciones para el crecimiento. El objetivo es centralizar todos los datos de negocio en una plataforma cloud segura, accesible desde cualquier dispositivo, con módulos adaptados a la realidad operativa de una empresa de servicios mineros. El sistema será desarrollado con arquitectura SaaS multi-tenant, con perfiles de acceso personalizados. Se implementarán también medidas de seguridad y cumplimiento normativo. El proyecto se dividirá en fases: análisis y diseño, desarrollo e implementación, capacitación y soporte. El resultado será una solución integral que optimice la gestión de proyectos, recursos humanos, finanzas, inventarios y reportes, facilitando la toma de decisiones basada en datos y el crecimiento sostenible de AF en la región patagónica.",
+
+  "context": {
+    "title": "Contexto y análisis competitivo",
+    "body": "Se analizaron las principales soluciones ERP disponibles en el mercado argentino para PyMEs del sector servicios: Holistor Gestión ERP (SaaS, desde ~$50.000 ARS/mes, módulos de ventas, compras, stock, tesorería y contabilidad, sin módulo RRHH nativo), Finnegans GO (SaaS enterprise, plataforma No-Code/Low-Code/Guest-Code, AWS, orientado a empresas medianas y grandes, sin precio publicado, implementación consultiva), y Tango Software (on-premise, desde ~$600.000 ARS/mes en planes completos, requiere infraestructura propia, no cloud nativo). Ninguna de estas soluciones está diseñada específicamente para empresas de servicios mineros patagónicos, ni contempla la particularidad operativa del sector. La solución propuesta por aonikenk.dev es un ERP desarrollado a medida con los módulos exactos que AF necesita hoy, con arquitectura escalable y potencial de comercialización a otras empresas del rubro."
+  },
+
+  "modules": [
+    {
+      "id": "discovery",
+      "num": "01",
+      "title": "Relevamiento y Arquitectura",
+      "desc": "Análisis funcional completo de los procesos actuales, definición de la arquitectura del sistema, diseño de base de datos y plan de migración de datos desde Excel. Entrega de prototipo (MVP) para validación temprana y documento de especificación técnica y funcional aprobado por el cliente.",
+      "table_title": "RELEVAMIENTO Y ARQUITECTURA",
+      "items": [
+        { "name": "Relevamiento funcional",      "desc": "Entrevistas, mapeo de procesos actuales y documentación de requerimientos",        "qty": "1", "price": 90, "show": true, "exclude_from_subtotal": false },
+        { "name": "Arquitectura del sistema",    "desc": "Diseño de arquitectura cloud, stack tecnológico, modelo de datos y APIs",          "qty": "1", "price": 110, "show": true, "exclude_from_subtotal": false },
+        { "name": "Plan de migración",           "desc": "Estrategia de migración de datos desde planillas Excel al nuevo sistema",          "qty": "1", "price": 30, "show": true, "exclude_from_subtotal": false },
+        { "name": "Prototipo (MVP) y Documento de especificación", "desc": "Entrega de documento técnico y funcional aprobado por el cliente",                 "qty": "1", "price": 15, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 01",
+      "notes": [
+        "El relevamiento funcional se realizará mediante entrevistas con el equipo de AF, análisis de los procesos actuales y documentación detallada de requerimientos. Se entregará un documento técnico con la arquitectura propuesta, modelo de datos y plan de migración, que deberá ser aprobado por el cliente antes de iniciar el desarrollo.",
+        "El prototipo (MVP) incluirá las funcionalidades básicas de cada módulo para validación temprana por parte del cliente, y se entregará junto con el documento de especificación técnica y funcional."
+      ]      
+    },
+    {
+      "id": "billing",
+      "num": "02",
+      "title": "Módulo de Facturación",
+      "desc": "Gestión completa del ciclo de facturación: clientes, proveedores, comprobantes electrónicos, cuentas corrientes y cobros/pagos. El módulo de facturación permitirá gestionar todo el ciclo de ventas y compras de la empresa, con funcionalidades específicas para el sector servicios mineros. Se incluirá un sistema de cuentas corrientes para clientes y proveedores, con seguimiento de saldos, estados de cuenta y antigüedad de deudas. La gestión de cobros y pagos permitirá registrar todas las transacciones financieras relacionadas con la facturación, incluyendo medios de pago, conciliación y reportes detallados. Además, como servicio opcional, se implementará la facturación electrónica con integración a AFIP/ARCA para emisión de comprobantes electrónicos (facturas A/B/C, notas de crédito y débito), cumpliendo con los requisitos legales vigentes."
+       ,
+      "table_title": "MÓDULO DE FACTURACIÓN",
+      "items": [
+        { "name": "ABM Clientes y Proveedores",  "desc": "Alta, baja, modificación y búsqueda de clientes y proveedores con historial",     "qty": "1", "price": 120, "show": true, "exclude_from_subtotal": false },
+        { "name": "Cuentas corrientes",          "desc": "Seguimiento de saldos, estados de cuenta y antigüedad de deudas por cliente",    "qty": "1", "price": 80, "show": true, "exclude_from_subtotal": false },
+        { "name": "Gestión de cobros y pagos",   "desc": "Registro de cobros, pagos, medios de pago y conciliación",                       "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Reportes de facturación",     "desc": "Dashboard e informes de ventas, compras, IVA y libro diario",                    "qty": "1", "price": 70, "show": true, "exclude_from_subtotal": false },
+        { "name": "Facturación electrónica",     "desc": "Emisión de facturas A/B/C con integración AFIP/ARCA, notas de crédito y débito, (VER NOTA AL PIE)", "qty": "1", "price": 600, "show": true, "exclude_from_subtotal": true, "exclude_from_total": true }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 02",
+      "notes": [
+        "La facturación electrónica se implementará con integración a AFIP/ARCA para emisión de comprobantes electrónicos. El costo de esta integración es elevado debido a la complejidad técnica y regulatoria, y se incluye como un ítem aparte que no forma parte del subtotal general del proyecto."
+      ]
+    },
+    {
+      "id": "finance",
+      "num": "03",
+      "title": "Flow de Ingresos y Egresos",
+      "desc": "Registro y seguimiento de todos los movimientos financieros: ingresos, egresos, gastos operativos, tesorería y proyección de flujo de caja. El módulo de flow financiero permitirá un control detallado de los ingresos y egresos de la empresa, con categorización por tipo, proyecto y centro de costo. Se implementará también un sistema de tesorería para el control de cajas, cuentas bancarias y movimientos internos, así como una proyección de flujo de caja con alertas de saldo mínimo para facilitar la gestión financiera.",
+      "table_title": "FLOW FINANCIERO — INGRESOS Y EGRESOS",
+      "items": [
+        { "name": "Registro de gastos",          "desc": "Categorización y registro de egresos por tipo, proyecto y centro de costo",      "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Tesorería y cajas",           "desc": "Control de cajas, cuentas bancarias, cheques y movimientos internos",            "qty": "1", "price": 120, "show": true, "exclude_from_subtotal": false },
+        { "name": "Flujo de caja",               "desc": "Proyección de ingresos/egresos, alertas de saldo mínimo y reportes",            "qty": "1", "price": 180, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 03",
+      "notes": []
+    },
+    {
+      "id": "access",
+      "num": "04",
+      "title": "Perfiles y Control de Acceso",
+      "desc": "Sistema de roles y permisos granulares por módulo y acción. Cada usuario accede sólo a lo que le corresponde según su rol dentro de la empresa.",
+      "table_title": "PERFILES Y CONTROL DE ACCESO",
+      "items": [
+        { "name": "Sistema de roles",            "desc": "Definición de roles predefinidos: Admin, Contador, Operador, RRHH, Solo lectura","qty": "1", "price": 70, "show": true, "exclude_from_subtotal": false },
+        { "name": "Permisos por módulo",         "desc": "Control granular: ver, crear, editar, eliminar por sección del sistema",         "qty": "1", "price": 70, "show": true, "exclude_from_subtotal": false },
+        { "name": "Log de auditoría",            "desc": "Registro de acciones por usuario: qué hizo, cuándo y desde qué dispositivo",    "qty": "1", "price": 200, "show": true, "exclude_from_subtotal": true, "exclude_from_total": true }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 04",
+      "notes": [
+        "El costo del log de auditoría se incluye como un ítem aparte que no forma parte del subtotal general del proyecto debido a su naturaleza de seguridad avanzada y la infraestructura adicional que requiere para su implementación. El log de auditoría registra todas las acciones realizadas por los usuarios, con detalles de qué hicieron, cuándo y desde qué dispositivo. Este log es una medida de seguridad adicional para monitorear el uso del sistema y detectar posibles accesos no autorizados o actividades sospechosas."
+      ]
+    },
+    {
+      "id": "stock",
+      "num": "05",
+      "title": "Gestión de Stock por Depósitos",
+      "desc": "Control de inventario multi-depósito con trazabilidad de movimientos, alertas de stock mínimo y gestión de herramientas y equipos. El módulo de gestión de stock permitirá llevar un control detallado del inventario de productos, herramientas, insumos y equipos, con la posibilidad de gestionar múltiples depósitos o ubicaciones físicas (taller, obra, almacén central). Se implementará un sistema de trazabilidad de movimientos de stock, incluyendo ingresos, egresos, transferencias entre depósitos y ajustes de inventario. Además, se configurarán alertas de stock mínimo para cada artículo, con reportes de valorización de inventario y rotación de stock para facilitar la gestión eficiente del inventario."
+       ,
+      "table_title": "GESTIÓN DE STOCK POR DEPÓSITOS",
+      "items": [
+        { "name": "ABM de artículos",            "desc": "Alta y gestión de productos, herramientas, insumos y equipos con código y descripción","qty": "1","price": 120, "show": true, "exclude_from_subtotal": false },
+        { "name": "Múltiples depósitos",         "desc": "Control de stock por ubicación física: taller, obra, almacén central",          "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Movimientos de stock",        "desc": "Ingresos, egresos, transferencias entre depósitos y ajustes de inventario",      "qty": "1", "price": 60, "show": true, "exclude_from_subtotal": false },
+        { "name": "Alertas y reportes",          "desc": "Alertas de stock mínimo, valorización de inventario e informes de rotación",     "qty": "1", "price": 90, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 05"
+    },
+    {
+      "id": "hr",
+      "num": "06",
+      "title": "Módulo RRHH — Gestión de Personal",
+      "desc": "Gestión de empleados, legajos digitales, liquidación de haberes básica y control de novedades de personal. El módulo de RRHH permitirá gestionar toda la información relacionada con el personal de la empresa, incluyendo datos personales, contratos, documentación adjunta y legajos digitales completos. .Además, se incluirá una funcionalidad básica de liquidación de haberes para el cálculo de sueldos, adicionales, retenciones y generación de recibos de sueldo. El módulo también contará con reportes de personal, como plantel activo, vencimientos de contratos, ausentismo y costos de nómina para facilitar la gestión del recurso humano. Se implementará de manera opcional un sistema de control de asistencia para registrar entradas, salidas, ausencias, vacaciones y licencias del personal"
+       ,
+      "table_title": "MÓDULO RRHH",
+      "items": [
+        { "name": "Legajos digitales",           "desc": "Ficha completa del empleado: datos personales, contrato, documentación adjunta", "qty": "1", "price": 150, "show": true, "exclude_from_subtotal": false },
+        { "name": "Liquidación de haberes",      "desc": "Cálculo básico de sueldos, adicionales, retenciones y recibos de sueldo",       "qty": "1", "price": 300, "show": true, "exclude_from_subtotal": false },
+        { "name": "Reportes de personal",        "desc": "Plantel activo, vencimientos de contratos, ausentismo y costos de nómina",      "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Control de asistencia",       "desc": "Registro de entradas, salidas, ausencias, vacaciones y licencias",              "qty": "1", "price": 350, "show": true, "exclude_from_subtotal": true, "exclude_from_total": true }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 06",
+      "notes": [
+        "El control de asistencia se incluye como un ítem aparte que no forma parte del subtotal general del proyecto debido a la complejidad adicional que implica su implementación si es que se requiere integración con hardware de control de acceso para el registro de entradas y salidas. Se puede implementar inicialmente con un sistema manual de registro de asistencia a través del propio sistema, y luego agregar la funcionalidad de control de acceso con hardware si el cliente lo considera necesario en el futuro."
+      ]
+    },
+    {
+      "id": "infra",
+      "num": "07",
+      "title": "Infraestructura, Deploy y Capacitación",
+      "desc": "Configuración del entorno cloud, deploy del sistema, migración inicial de datos y capacitación del equipo. El proyecto incluye la configuración completa del entorno cloud para alojar el sistema ERP, incluyendo la configuración de servidores, bases de datos, dominios y certificados SSL para garantizar la seguridad y disponibilidad del sistema. Se realizará el deploy del sistema en un entorno de producción cloud, asegurando su correcto funcionamiento y rendimiento. Además, se llevará a cabo la migración inicial de datos desde las planillas Excel actuales al nuevo sistema, con limpieza y validación de datos para asegurar su integridad. Finalmente, se brindarán sesiones de capacitación para el equipo de AF, con el objetivo de garantizar una transición fluida al nuevo sistema y que los usuarios puedan aprovechar al máximo todas las funcionalidades implementadas."
+       ,
+      "table_title": "INFRAESTRUCTURA, DEPLOY Y CAPACITACIÓN",
+      "items": [
+        { "name": "Setup cloud",                 "desc": "Configuración de servidor, base de datos, dominio y certificados SSL",           "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Migración de datos",          "desc": "Importación y limpieza de datos desde planillas Excel al sistema",              "qty": "1", "price": 60, "show": true, "exclude_from_subtotal": false },
+        { "name": "Capacitación",                "desc": "2 sesiones de capacitación para el equipo",             "qty": "2", "price": 40, "show": true, "exclude_from_subtotal": false },
+        { "name": "Manual de usuario",           "desc": "Documentación de uso del sistema adaptada a los procesos de AF",               "qty": "1", "price": 15, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 07"
+    }
+  ],
+
+  "totals": {
+    "subtotal":          { "label": "Subtotal desarrollo inicial (módulos + extras)", "value": 0 },
+    "discount":          { "label": "Descuento cliente existente (10%)",  "percent": 10 },
+    "extras":            { "label": "Extras primer mes",                "value": 0 },
+    "subscriptionPlans": [
+      { "label": "ERP Basic (Módulos 02, 03 y 04)",  "description": "Plan básico con funcionalidades esenciales", "value": 150 },
+      { "label": "ERP Pro (todo lo del Basic + Módulo 05)",   "description": "Plan profesional con funcionalidades avanzadas", "value": 200 },
+      { "label": "ERP Enterprise (sistema completo + servicios adicionales a demanda)", "description": "Plan empresarial con todas las funcionalidades y servicios personalizados", "value": 330 }
+    ],
+    "subscriptionPlansNotes": [
+      "El cobro de la suscripción se comenzará a aplicar a partir del mes 7 luego de la entrega final del sistema. Los primeros 6 meses serán bonificados al 100%.",
+      "Para cada plan se aplicará un descuento por pago semestral o anual.",
+      "El costo de mantenimiento mínimo, que garantiza el correcto funcionamiento del sistema, está incluido en el precio de la suscripción. Para un plan de mantenimiento adicional perzonalizado, se aplicará un cargo extra.",
+      "El costo mensual podrá verse afectado por el volumen de datos y usuarios, el hosting elegido (tanto para el código fuente como para los datos (base de datos)) y las funcionalidades adicionales seleccionadas."
+    ],
+    "clientBenefits": [],
+    "total":             { "label": "TOTAL DESARROLLO INICIAL",                "value": 0 },
+    "notes": [
+      "El total incluye un 10% de descuento por ser cliente activo de aonikenk.dev.",
+      "Soporte específico post-lanzamiento: 90 días incluidos. A partir del mes 4, plan de mantenimiento opcional a convenir (más allá del mantenimiento incluido en el plan de suscripción)."
+    ]
+  },
+
+  "conditions": [
+    { "key": "Forma de pago",    "value": "30% al inicio (Módulo 01) · 40% al completar módulos 02, 03 y 04 · 30% en la entrega final" },
+    { "key": "Plazo estimado",   "value": "3 a 6 meses desde la aprobación del relevamiento funcional" },
+    { "key": "Metodología",      "value": "Desarrollo iterativo por módulos con entregables parciales y aprobación del cliente" },
+    { "key": "Revisiones",       "value": "2 rondas de revisión incluidas por módulo" },
+    { "key": "Stack tecnológico","value": "Next.js / Node.js / PostgreSQL · Deploy en Vercel + Supabase o Railway (puede variar según necesidades, funcionalidades elegidas, etc.)" },
+    { "key": "Hosting (servidor)", "value": "Se encuentra incluido en el precio de la suscripción. Si el cliente requiere un hosting adicional, se aplicará un cargo extra. Si, por otro lado, el cliente prefiere gestionar su propio hosting, podrá hacerlo bajo su responsabilidad, y se descontará el monto del valor de la suscripción." },
+    { "key": "Validez",          "value": "Este presupuesto tiene validez de 30 días desde su emisión (Mayo 2026)" }
+  ]
+}

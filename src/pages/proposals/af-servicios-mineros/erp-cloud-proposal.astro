@@ -8,24 +8,20 @@ import ProposalConditions from '../../../components/ProposalConditions.astro';
 import ProposalSignatures from '../../../components/ProposalSignatures.astro';
 import ProposalFooter     from '../../../components/ProposalFooter.astro';
 
-// ── Import data from JSON ─────────────────────────────────────
-// To create a new proposal: duplicate this file and change the import below.
-import data from '../../../data/clients/af-servicios-mineros/marketing-proposal.json';
+// ── Data ──────────────────────────────────────────────────────
+import data from '../../../data/clients/af-servicios-mineros/erp-cloud-proposal.json';
 
 // ── Auth guard ────────────────────────────────────────────────
 const COOKIE_NAME = 'aonikenk_auth';
-const slug        = 'AF_SERVICIOS_MINEROS_MARKETING_PROPOSAL';
-const validCode = process.env[`PROPOSAL_CODE_${slug}`]
-               ?? process.env.PROPOSAL_CODE_DEFAULT;
-// const validCode = import.meta.env[`PROPOSAL_CODE_${slug}`]
-//                ?? import.meta.env.PROPOSAL_CODE_DEFAULT;
+const slug        = 'AF_SERVICIOS_MINEROS_ERP_CLOUD_PROPOSAL';
+const validCode   = import.meta.env[`PROPOSAL_CODE_${slug}`]
+                 ?? import.meta.env.PROPOSAL_CODE_DEFAULT;
 const cookie      = Astro.cookies.get(COOKIE_NAME);
 
 if (!cookie || !validCode || cookie.value !== validCode) {
   return Astro.redirect(`/login?redirect=${Astro.url.pathname}`, 302);
 }
 // ─────────────────────────────────────────────────────────────
-
 
 interface Item {
   name: string;
@@ -34,9 +30,10 @@ interface Item {
   price: number;
   show: boolean;
   exclude_from_subtotal?: boolean;
+  exclude_from_total?: boolean;
 }
 
-const { meta, provider, client, intro, modules, totals, conditions } = data;
+const { meta, provider, client, intro, context, modules, totals, conditions } = data;
 
 const pageTitle       = `Presupuesto #${meta.ref} — ${client.name} · ${provider.name}${provider.tld}`;
 const pageDescription = `Propuesta de ${meta.proposal_desc} para ${client.name}, preparada por ${provider.name}${provider.tld}.`;
@@ -44,27 +41,27 @@ const pageDescription = `Propuesta de ${meta.proposal_desc} para ${client.name},
 let subTotal = 0;
 let subTotalWithExtras = 0;
 const totals_aux: {
-  modules: { 
-    num: string;
-    title: string;
-    desc: string;
-    table_title: string;
-    items: Item[];
-    subtotal_label: string;
-    currency: string;
-    subtotal: number;
-    subtotal_first_month: number;
-    subtotal_label_first_month?: string;
-    notes?: string[]; 
-  }[];
+    modules: { 
+      num: string;
+      title: string;
+      desc: string;
+      table_title: string;
+      items: Item[];
+      subtotal_label: string;
+      currency: string;
+      subtotal: number;
+      subtotal_first_month: number;
+      subtotal_label_first_month?: string;
+      notes?: string[];
+    }[];
   subtotal: { label: string; value: number };
   extras: { label: string; value: number };
-  discount: { label: string; percent: number };
   clientBenefits: { label: string; value: number; }[];
   subscriptionPlans: { label: string; description: string; value: number; }[];
   subscriptionPlansNotes?: string[];
+  discount: { label: string; percent: number };
   total: { label: string; value: number };
-  notes: any[];
+  notes?: string[];
 } = {
   modules: [],
   subtotal: { label: totals.subtotal.label, value: 0 },
@@ -78,8 +75,8 @@ const totals_aux: {
 };
 
 modules.map(mod => {
-            const subTotalModule = mod.items.filter(item => item.show && !item.exclude_from_subtotal).reduce((acc, item) => acc + (item.price * parseInt(item.qty)), 0);
-            const subTotalFirstMonthModule = mod.items.filter(item => item.show).reduce((acc, item) => acc + (item.price * parseInt(item.qty)), 0);
+            const subTotalModule = mod.items.filter(item => item.show && !(item.exclude_from_subtotal || item.exclude_from_total)).reduce((acc, item) => acc + (item.price * parseInt(item.qty)), 0);
+            const subTotalFirstMonthModule = mod.items.filter(item => item.show && !item.exclude_from_total).reduce((acc, item) => acc + (item.price * parseInt(item.qty)), 0);
             subTotal += subTotalModule;   
             subTotalWithExtras += subTotalFirstMonthModule;         
             totals_aux.modules = [...totals_aux.modules, {
@@ -93,17 +90,13 @@ modules.map(mod => {
               currency: meta.currency,
               subtotal: subTotalModule,
               subtotal_first_month: subTotalFirstMonthModule,
-              notes: mod.notes              
+              notes: mod.notes
             }]
   });
-  
-
-
 ---
 
 <ProposalLayout title={pageTitle} description={pageDescription}>
 
-  <!-- Nav -->
   <ProposalNav
     name={provider.name}
     tld={provider.tld}
@@ -111,7 +104,6 @@ modules.map(mod => {
     date={meta.date}
   />
 
-  <!-- Cover -->
   <ProposalCover
     provider={provider}
     client={client}
@@ -119,7 +111,6 @@ modules.map(mod => {
     totalValue={(subTotalWithExtras * (1 - totals_aux.discount.percent / 100)).toFixed(2)}
   />
 
-  <!-- Main content -->
   <div id="content">
     <div class="p-inner">
 
@@ -131,27 +122,64 @@ modules.map(mod => {
       </div>
       <div class="rule"></div>
 
-      <div class="s-modules">
-        <!-- Service modules (driven by JSON) -->
-        {
-          totals_aux.modules.map(mod => (                                
-              <ProposalModule
-                num={mod.num}
-                title={mod.title}
-                desc={mod.desc}
-                table_title={mod.table_title}
-                items={mod.items}
-                currency={meta.currency}
-                subtotal={mod.subtotal}
-                subtotal_first_month={mod.subtotal_first_month}
-                subtotal_label={mod.subtotal_label}
-                subtotal_label_first_month={mod.subtotal_label_first_month}
-                notes={mod.notes}
-              />
-            )
-          )
-        }
-      </div>
+      <!-- Contexto competitivo -->
+      <!-- <div class="s-header reveal">
+        <div class="s-eyebrow"><span>Análisis de mercado</span></div>
+        <h2 class="s-title">{context.title}</h2>
+        <p class="s-desc">{context.body}</p>
+      </div> -->
+
+      <!-- Competitor comparison table -->
+      <!-- <table class="srv-table reveal" style="margin-bottom:40px">
+        <tr class="t-head-section"><td colspan="4">COMPARATIVA DE SOLUCIONES ERP — MERCADO ARGENTINO</td></tr>
+        <tr class="t-head-cols">
+          <th>Solución</th><th>Modelo</th><th>Módulos clave</th><th>Observación</th>
+        </tr>
+        <tbody>
+          <tr>
+            <td>Holistor Gestión ERP</td>
+            <td>SaaS · Cloud</td>
+            <td>Ventas, Compras, Stock, Tesorería, Contabilidad</td>
+            <td>Sin módulo RRHH. No adaptado al sector minero.</td>
+          </tr>
+          <tr>
+            <td>Finnegans GO</td>
+            <td>SaaS · Enterprise</td>
+            <td>ERP completo + CRM + HCM (Quippos)</td>
+            <td>Orientado a empresas medianas/grandes. Sin precio publicado. Implementación consultiva larga.</td>
+          </tr>
+          <tr>
+            <td>Tango Software</td>
+            <td>On-premise</td>
+            <td>ERP completo, RRHH, contabilidad avanzada</td>
+            <td>No cloud nativo. Requiere infraestructura propia. Desde ~$600.000 ARS/mes.</td>
+          </tr>
+          <tr>
+            <td style="color:var(--sienna);font-weight:700">aonikenk.dev (propuesta)</td>
+            <td>SaaS · Cloud · A medida</td>
+            <td>Facturación, Finanzas, Stock, RRHH, Accesos — adaptados al sector minero</td>
+            <td style="color:var(--sienna)">Desarrollo a medida. Arquitectura multi-tenant reutilizable. Stack moderno.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="rule"></div> -->
+
+      <!-- Modules -->
+      {totals_aux.modules.map(mod => (
+        <ProposalModule
+            num={mod.num}
+            title={mod.title}
+            desc={mod.desc}
+            table_title={mod.table_title}
+            items={mod.items}
+            currency={meta.currency}
+            subtotal={mod.subtotal}
+            subtotal_first_month={mod.subtotal_first_month}
+            subtotal_label={mod.subtotal_label}
+            subtotal_label_first_month={mod.subtotal_label_first_month}
+            notes={mod.notes}
+        />
+      ))}
 
       <!-- Totals -->
       <ProposalTotals 
@@ -159,33 +187,24 @@ modules.map(mod => {
           {
             ...totals_aux, 
             extras: { label: totals_aux.extras.label, value: (subTotalWithExtras - subTotal) }, 
-            subtotal: { label: totals_aux.subtotal.label, value: subTotal }, 
             clientBenefits: totals_aux.clientBenefits,
             subscriptionPlans: totals_aux.subscriptionPlans,
             subscriptionPlansNotes: totals_aux.subscriptionPlansNotes,
+            subtotal: { label: totals_aux.subtotal.label, value: subTotal }, 
             total: { label: totals_aux.total.label, value: (subTotalWithExtras * (1 - totals_aux.discount.percent / 100)) }
           }} 
           currency={meta.currency}/>
-
-      <!-- Conditions -->
       <ProposalConditions conditions={conditions} />
-
-      <!-- Signatures -->
       <ProposalSignatures provider={provider} client={client} />
 
     </div>
   </div>
 
-  <!-- Footer -->
   <ProposalFooter provider={provider} client={client} meta={meta} />
 
 </ProposalLayout>
 
 <style lang="scss">
   @use '../../../styles/tokens' as *;
-
-  #content {
-    padding: 0 0 100px;
-    background: var(--obsidian);
-  }
+  #content { padding: 0 0 100px; background: var(--obsidian); }
 </style>

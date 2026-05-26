@@ -17,6 +17,7 @@ if (Astro.request.method === 'POST') {
   const slug      = redirect.replace('/proposals/', '') ?? 'default';
   const envKey    = `PROPOSAL_CODE_${slug.toUpperCase().replace(/[-\/]/g, '_')}`;
   const validCode = process.env[envKey] ?? process.env.PROPOSAL_CODE_DEFAULT ?? '';
+  // const validCode = import.meta.env[envKey] ?? import.meta.env.PROPOSAL_CODE_DEFAULT ?? '';
 
   if (!validCode) {
     // Env var not configured — fail safe

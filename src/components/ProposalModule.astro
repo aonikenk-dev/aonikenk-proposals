@@ -6,6 +6,7 @@ interface Item {
   price: number;
   show: boolean;
   exclude_from_subtotal?: boolean;
+  exclude_from_total?: boolean;
 }
 interface Props {
   num: string;
@@ -19,8 +20,9 @@ interface Props {
   subtotal_first_month: number;
   subtotal_label_first_month?: string;
   note?: string;
+  notes?: string[];
 }
-const { num, title, desc, table_title, items, subtotal, subtotal_first_month, subtotal_label_first_month, subtotal_label, note, currency } = Astro.props;
+const { num, title, desc, table_title, items, subtotal, subtotal_first_month, subtotal_label_first_month, subtotal_label, notes, currency } = Astro.props;
 ---
 
 <div class="s-header reveal">
@@ -42,7 +44,7 @@ const { num, title, desc, table_title, items, subtotal, subtotal_first_month, su
   <tbody>
     {items.map(item => (
       item.show &&
-      <tr>
+      <tr class={item.exclude_from_total ? "row-excl" : undefined}>
         <td>{item.name}</td>
         <td>{item.desc}</td>
         <td>{item.qty}</td>
@@ -60,9 +62,11 @@ const { num, title, desc, table_title, items, subtotal, subtotal_first_month, su
     </>
   }
   <span class="subtotal-label">{subtotal_label}:</span>
-  <span class="subtotal-val">{currency} {subtotal.toFixed(2)}</span>
+  <span class="subtotal-val">{currency} {subtotal?.toFixed(2)}</span>
 </div>
 
-{note && <p class="module-note reveal">* {note}</p>}
+{notes && notes.map(note => (
+  <p class="module-note reveal">* {note}</p>
+))}
 
-<div class="rule"></div>
+<div class="rule" style={notes ? 'margin-top:28px;' : ''}></div>

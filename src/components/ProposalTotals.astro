@@ -1,15 +1,60 @@
 ---
+import { placements } from 'astro/dist/runtime/client/dev-toolbar/ui-library/window';
+
 interface Totals {
   modules: { num: string; title: string; subtotal: number }[];
   subtotal: { label:string; value:number; };
   extras: { label:string; value:number; };
-  discount: { label:string; value:number; };
+  clientBenefits: { label: string; value: number; }[];
+  subscriptionPlans: { label: string; description: string; value: number; }[];
+  subscriptionPlansNotes?: string[];
+  discount: { label:string; percent:number; };
   total:    { label:string; value:number; };
-  notes: string[];
+  notes?: string[];
 }
 interface Props { totals: Totals; currency: string; }
 const { totals, currency } = Astro.props;
 ---
+
+{
+    totals.subscriptionPlans && totals.subscriptionPlans.length > 0 &&
+    <div class="s-header reveal">
+      <div class="s-eyebrow"><span>Planes</span></div>
+      <h2 class="s-title">Planes de suscripción</h2>
+      <p class="s-desc">Planes de suscripción disponibles divididos por niveles de funcionalidad y soporte. El costo mensual varía según el nivel de funcionalidad y soporte seleccionado. Se puede optar por un pago semestral o anual, a través del cual se aplicarán los descuentos correspondientes.</p>
+    </div>
+}
+{
+  totals.subscriptionPlans && totals.subscriptionPlans.length > 0 &&
+    <table class="srv-table reveal">
+      <tr class="t-head-section">
+        <td colspan="3">PLanes de Suscripción</td>
+      </tr>
+      <tr class="t-head-cols">
+        <th>Tipo de Plan</th>
+        <th>Descripción</th>
+        <th>Costo Mensual ({currency})</th>
+      </tr>
+      <tbody>
+        {totals.subscriptionPlans.map(plan => (
+          <tr>
+            <td>{plan.label}</td>
+            <td>{plan.description}</td>
+            <td style="color: white;">{plan.value.toFixed(2)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+}    
+{
+  totals.subscriptionPlansNotes?.map(note => (
+    <p class="total-note reveal">* {note}</p>
+  ))
+}
+
+<div class="rule" style="margin-top:40px"></div>
+
+
 
 <div class="s-header reveal">
   <div class="s-eyebrow"><span>Resumen</span></div>
@@ -25,25 +70,41 @@ const { totals, currency } = Astro.props;
       </tr>
     ))
   }
-  <tr class="row-sub">
-    <td>{totals.extras.label}</td>
-    <td>{currency} {totals.extras.value.toFixed(2)}</td>
-  </tr>
+  {
+    totals.extras.value > 0 &&
+      <tr class="row-sub">
+        <td>{totals.extras.label}</td>
+        <td>{currency} {totals.extras.value.toFixed(2)}</td>
+      </tr>
+  }
   <tr class="row-sub">
     <td>{totals.subtotal.label}</td>
     <td>{currency} {(totals.subtotal.value + totals.extras.value).toFixed(2)}</td>
   </tr>
-  <tr class="row-disc">
-    <td>{totals.discount.label}</td>
-    <td>- {currency} {((totals.subtotal.value + totals.extras.value) * totals.discount.value / 100).toFixed(2)}</td>
-  </tr>
+  {
+    totals.discount && totals.discount.percent > 0 &&
+      <tr class="row-disc">
+        <td>{totals.discount.label}</td>
+        <td>- {currency} {((totals.subtotal.value + totals.extras.value) * totals.discount.percent / 100).toFixed(2)}</td>
+      </tr>
+      <tr class="row-sub"><td>─────────────────────────────────────────────────────</td><td>─────────────</td></tr>
+  }  
   <tr class="row-total">
     <td>{totals.total.label}</td>
     <td>{currency} {totals.total.value.toFixed(2)}</td>
-  </tr>
+  </tr>  
+  {
+    totals.clientBenefits && totals.clientBenefits.length > 0 &&
+    totals.clientBenefits.map(benefit => (
+       <tr class="row-benefit">
+         <td>{benefit.label}</td>
+         <td>{currency} {benefit.value.toFixed(2)}</td>
+       </tr>
+    ))
+  }
 </table>
 
-{totals.notes.map(note => (
+{totals.notes?.map(note => (
   <p class="total-note reveal">* {note}</p>
 ))}
 

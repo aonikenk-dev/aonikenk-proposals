@@ -44,7 +44,7 @@
         { "name": "Identidad digital",  "desc": "Plantillas para posts, stories, highlights, reels, etc. (Instagram/LinkedIn/Facebook)", "qty": "1", "price": 120, "show": true, "exclude_from_subtotal": false }
       ],
       "subtotal_label": "Subtotal Branding",
-      "note": "Si el cliente desea mantener la identidad visual (logos, paleta de colores, iconografía, etc.), se pueden omitir los ítems relacionados y ajustar los precios y el subtotal del módulo. El desarrollo de la identidad visual se realizará en estrecha colaboración con el cliente para asegurar que refleje fielmente la esencia de la empresa y sus objetivos comerciales."
+      "notes": ["Si el cliente desea mantener la identidad visual (logos, paleta de colores, iconografía, etc.), se pueden omitir los ítems relacionados y ajustar los precios y el subtotal del módulo. El desarrollo de la identidad visual se realizará en estrecha colaboración con el cliente para asegurar que refleje fielmente la esencia de la empresa y sus objetivos comerciales."]
     },
     {
       "id": "social",
@@ -62,11 +62,11 @@
       ],
       "subtotal_label_first_month": "Precio primer mes",
       "subtotal_label": "Precio mensual (a partir del 2do mes)",
-      "note": "Se pueden agregar servicios adicionales como LinkedIn Ads, producción de video, etc. por un costo extra a definir según necesidades específicas. También se ofrece la opción de contratar por trimestre o semestre con descuentos respectivos."
+      "notes": ["Se pueden agregar servicios adicionales como LinkedIn Ads, Meta Ads, producción de video, etc. por un costo extra a definir según necesidades específicas. También se ofrece la opción de contratar por trimestre o semestre con descuentos respectivos."]
     },
     {
       "id": "web",
-      "num": "03",
+      "num": "02",
       "title": "Landing Page / Sitio Web",
       "desc": "Desarrollo de un sitio web profesional, moderno y optimizado para SEO que sirva como carta de presentación ante nuevos clientes y empresas mineras de la región. El sitio incluirá secciones clave como Inicio, Servicios, Proyectos, Sobre Nosotros, Contacto, etc. con un diseño responsive para una experiencia óptima en desktop y mobile, y alineado con el manual de marca y la identidad visual definida.",
       "billing_type": "fixed",
@@ -81,17 +81,29 @@
         { "name": "Capacitación y entrega", "desc": "Manual de uso y sesión de traspaso al cliente",                                  "qty": "1", "price": 20, "show": true, "exclude_from_subtotal": false }
       ],
       "subtotal_label": "Subtotal Landing Page",
-      "note": "El desarrollo se realizará en una plataforma que facilite futuras actualizaciones requeridas por el cliente. El costo de hosting y dominio no está incluido pero se puede gestionar por un costo adicional si el cliente lo requiere."}
+      "notes": [
+        "El desarrollo se realizará en una plataforma que facilite futuras actualizaciones requeridas por el cliente. El costo de hosting y dominio no está incluido pero se puede gestionar por un costo adicional si el cliente lo requiere."
+      ]
+    }
   ],
 
   "totals": {
-    "subtotal":          { "label": "Subtotal general (módulos + extras)", "value": "USD 5.100" },
-    "discount":          { "label": "Descuento paquete integral (10%)",  "percent": "10" },
-    "extras":             { "label": "Extras primer mes",                "value": "100" },
-    "total":             { "label": "TOTAL DEL PROYECTO",                "value": "4.590" },
+    "subtotal":          { "label": "Subtotal general (módulos + extras)", "value": 0 },
+    "discount":          { "label": "Descuento paquete integral (10%)",  "percent": 10 },
+    "extras":             { "label": "Extras primer mes",                "value": 0 },
+    "subscriptionPlans": [
+      { "label": "Mkt Basic",  "description": "Incluye: 2 a 3 posteos semanales, historias, diseño gráfico básico, redacción de textos y moderación de comentarios en 1 o 2 redes", "value": 130 },
+      { "label": "Mkt Pro",   "description": "Incluye: 3 a 5 posteos semanales, historias recurrentes, guiones y edición de videos (Reels), y estrategia mensual", "value": 200 },
+      { "label": "Mkt Enterprise", "description": "Incluye: Publicación diaria, gestión de campañas pagas (Ads), creación de contenido en locación (fotos y videos) y reportes de métricas", "value": 290 }
+    ],
+    "subscriptionPlansNotes": [
+      "Se pueden agregar servicios adicionales como LinkedIn Ads, producción de video, etc. por un costo extra a definir según necesidades específicas. También se ofrece la opción de contratar por trimestre o semestre con descuentos respectivos."
+    ],
+    "clientBenefits": [],
+    "total":             { "label": "TOTAL DEL PROYECTO",                "value": 0 },
     "notes": [
       "El total incluye un 10% de descuento por contratación del paquete integral (Branding + Redes + Landing Page).",
-      "El precio de Redes Sociales corresponde al primer trimestre. A partir del mes 4 se renueva con un incremento al valor mensual."
+      "El precio de Redes Sociales corresponde al Plan Mrkt Enterprise."
     ]
   },
 

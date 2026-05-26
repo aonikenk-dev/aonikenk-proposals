@@ -91,13 +91,14 @@
   tbody tr { border-bottom:1px solid var(--border); transition:background .2s; &:hover{ background:rgba(255,255,255,.02); } }
   tbody tr:nth-child(odd)  td { background:rgba(255,255,255,.015); }
   tbody tr:nth-child(even) td { background:transparent; }
+  tbody .row-excl td { background:rgba(192,98,58,.06) !important; color:var(--sienna) !important; } 
   td { padding:11px 14px; border:1px solid var(--border); font-size:12px; color:var(--body); vertical-align:middle; &:first-child{ font-weight:600; color:var(--white); } &:nth-child(3){ text-align:center; color:var(--subtle); } &:last-child{ text-align:right; } }
 }
 
 .subtotal-line  { display:flex; align-items:baseline; gap:12px; margin-bottom:28px; }
 .subtotal-label { font-size:12px; color:var(--muted); }
 .subtotal-val   { font-family:$font-display; font-weight:700; font-size:22px; color:var(--sienna); letter-spacing:-0.02em; }
-.module-note    { font-size:11px; font-weight: bold; font-style:italic; line-height:1.8; margin-bottom:28px; }
+.module-note    { font-size:11px; font-weight: bold; font-style:italic; line-height:1.8; margin-bottom:10px; }
 
 // ── Totals ────────────────────────────────────────────────────
 .total-table {
