@@ -1,0 +1,973 @@
+---
+import ProposalLayout from '../../../layouts/ProposalLayout.astro';
+import ProposalNav from '../../../components/ProposalNav.astro';
+import ProposalCover from '../../../components/ProposalCover.astro';
+import ProposalModule from '../../../components/ProposalModule.astro';
+import ProposalTotals from '../../../components/ProposalTotals.astro';
+import ProposalConditions from '../../../components/ProposalConditions.astro';
+import ProposalSignatures from '../../../components/ProposalSignatures.astro';
+import ProposalFooter from '../../../components/ProposalFooter.astro';
+
+// ── Data ──────────────────────────────────────────────────────
+import data from '../../../data/clients/netdriver/tgrs-migration-proposal.json';
+
+// ── Auth guard ────────────────────────────────────────────────
+const COOKIE_NAME = 'aonikenk_auth';
+const slug = 'NETDRIVER_TGRS_MIGRATION_PROPOSAL';
+const validCode   = process.env[`PROPOSAL_CODE_${slug}`]
+                 ?? process.env.PROPOSAL_CODE_DEFAULT;
+// const validCode =
+//   import.meta.env[`PROPOSAL_CODE_${slug}`] ??
+//   import.meta.env.PROPOSAL_CODE_DEFAULT;
+const cookie = Astro.cookies.get(COOKIE_NAME);
+
+if (!cookie || !validCode || cookie.value !== validCode) {
+  return Astro.redirect(`/login?redirect=${Astro.url.pathname}`, 302);
+}
+// ─────────────────────────────────────────────────────────────
+
+interface Item {
+  name: string;
+  desc: string;
+  qty: string;
+  price: number;
+  show: boolean;
+  exclude_from_subtotal?: boolean;
+  exclude_from_total?: boolean;
+}
+
+const { meta, provider, client, intro, modules, totals, conditions } = data;
+
+const pageTitle = `Presupuesto #${meta.ref} — ${client.name} · ${provider.name}${provider.tld}`;
+const pageDescription = `Propuesta de ${meta.proposal_desc} para ${client.name}, preparada por ${provider.name}${provider.tld}.`;
+
+let subTotal = 0;
+let subTotalWithExtras = 0;
+const totals_aux: {
+  modules: {
+    num: string;
+    title: string;
+    desc: string;
+    table_title: string;
+    items: Item[];
+    subtotal_label: string;
+    currency: string;
+    subtotal: number;
+    subtotal_first_month: number;
+    subtotal_label_first_month?: string;
+    notes?: string[];
+  }[];
+  subtotal: { label: string; value: number };
+  extras: { label: string; value: number };
+  clientBenefits: { label: string; value: number }[];
+  subscriptionPlans: { label: string; description: string; value: number }[];
+  subscriptionPlansNotes?: string[];
+  discount: { label: string; percent: number };
+  total: { label: string; value: number };
+  notes?: string[];
+} = {
+  modules: [],
+  subtotal: { label: totals.subtotal.label, value: 0 },
+  extras: { label: totals.extras.label, value: totals.extras.value },
+  clientBenefits: totals.clientBenefits,
+  subscriptionPlans: totals.subscriptionPlans,
+  subscriptionPlansNotes: totals.subscriptionPlansNotes,
+  discount: totals.discount,
+  total: totals.total,
+  notes: totals.notes || [],
+};
+
+modules.map((mod) => {
+  const subTotalModule = mod.items
+    .filter(
+      (item) =>
+        item.show && !(item.exclude_from_subtotal || item.exclude_from_total),
+    )
+    .reduce((acc, item) => acc + item.price * parseInt(item.qty), 0);
+  const subTotalFirstMonthModule = mod.items
+    .filter((item) => item.show && !item.exclude_from_total)
+    .reduce((acc, item) => acc + item.price * parseInt(item.qty), 0);
+  subTotal += subTotalModule;
+  subTotalWithExtras += subTotalFirstMonthModule;
+  totals_aux.modules = [
+    ...totals_aux.modules,
+    {
+      num: mod.num,
+      title: mod.title,
+      table_title: mod.table_title,
+      desc: mod.desc,
+      items: mod.items,
+      subtotal_label: mod.subtotal_label,
+      subtotal_label_first_month: mod.subtotal_label_first_month,
+      currency: meta.currency,
+      subtotal: subTotalModule,
+      subtotal_first_month: subTotalFirstMonthModule,
+      notes: mod.notes,
+    },
+  ];
+});
+---
+
+<ProposalLayout title={pageTitle} description={pageDescription}>
+  <ProposalNav
+    name={provider.name}
+    tld={provider.tld}
+    ref={meta.ref}
+    date={meta.date}
+  />
+
+  <ProposalCover
+    provider={provider}
+    client={client}
+    meta={meta}
+    totalValue={(
+      subTotalWithExtras *
+      (1 - totals_aux.discount.percent / 100)
+    ).toFixed(2)}
+  />
+
+  <div id="content">
+    <div class="p-inner">
+      <!-- Intro -->
+      <div class="s-header reveal">
+        <div class="s-eyebrow"><span>Introducción</span></div>
+        <h2 class="s-title">Contexto del proyecto</h2>
+        <p class="s-desc">{intro}</p>
+      </div>
+      <div class="rule"></div>
+
+      <!-- Plan and Estimation -->
+
+      <div class="s-header reveal">
+        <div class="s-eyebrow"><span>Plan y Estimación</span></div>
+        <h2 class="s-title">Plan y Estimación</h2>
+        <p class="s-desc">A continuación se presenta el plan detallado y las estimaciones para la migración del sistema actual a la nueva arquitectura. 
+          Se muestra el análisis del stack actual, los puntos críticos a considerar, el código que se conservará y las implicaciones técnicas. </p>
+      </div>
+
+      <!-- ══ 01 SISTEMA ACTUAL ══ -->
+      <div class="s-header reveal">
+        <div class="s-eyebrow"><span>01 — Sistema Actual</span></div>
+        <h2 class="s-title">Stack Legacy (a reemplazar)</h2>
+        <p class="s-desc">
+          El sistema actual tiene dos capas de backend acopladas: ASP/VBScript
+          construye el XML a partir de SQL Server y lo envía via HTTP POST a un
+          PHP que sanitiza y llama al WS de TRGS. Los nodos marcados en Sienna
+          se eliminan; el WS externo se conserva sin cambios.
+        </p>
+      </div>
+
+        <div class="flow-row">
+          <div class="flow-node dead">
+            <div class="dead-badge">✕</div>
+            <div class="fn-tag">Entrada</div>
+            <div class="fn-name">Excel / Form</div>
+            <div class="fn-tech">proceso manual</div>
+          </div>
+          <div class="flow-arrow">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">HTTP POST XML</div>
+          </div>
+          <div class="flow-node dead">
+            <div class="dead-badge">✕</div>
+            <div class="fn-tag">Backend 1</div>
+            <div class="fn-name">ASP / VBScript</div>
+            <div class="fn-tech">SQL Server → XML</div>
+          </div>
+          <div class="flow-arrow">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">POST input=XML</div>
+          </div>
+          <div class="flow-node dead">
+            <div class="dead-badge">✕</div>
+            <div class="fn-tag">Backend 2</div>
+            <div class="fn-name">PHP</div>
+            <div class="fn-tech">sanitize + SOAP</div>
+          </div>
+          <div class="flow-arrow">
+            <div class="arrow-line"></div>
+            <div class="arrow-label">SOAP 1.1</div>
+          </div>
+          <div class="flow-node ext">
+            <div class="keep-badge">✓</div>
+            <div class="fn-tag">Externo · intacto</div>
+            <div class="fn-name">TRGS WS</div>
+            <div class="fn-tech">trgs.com.ar</div>
+          </div>
+        </div>
+
+        <div
+          style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:3px;margin-bottom:30px;"
+        >
+          <div
+            style="background:var(--carbon);padding:22px 24px;border-top:2px solid var(--sienna)"
+          >
+            <div
+              style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--sienna);margin-bottom:10px"
+            >
+              Se elimina
+            </div>
+            <div style="font-size:11px;color:var(--muted);line-height:2">
+              ASP / VBScript (IIS)<br />PHP (apache)<br />SQL Server (origen)<br
+              />Comunicación XML cruda<br />Acoplamiento ASP↔PHP
+            </div>
+          </div>
+          <div
+            style="background:var(--carbon);padding:22px 24px;border-top:2px solid var(--moss)"
+          >
+            <div
+              style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--moss);margin-bottom:10px"
+            >
+              Se conserva
+            </div>
+            <div style="font-size:11px;color:var(--muted);line-height:2">
+              WS TRGS (trgs.com.ar)<br />Protocolo SOAP 1.1<br />Flujo eco →
+              sesión → tramite<br />Credenciales de acceso<br />Lógica de
+              negocio TRGS
+            </div>
+          </div>
+          <div
+            style="background:var(--carbon);padding:22px 24px;border-top:2px solid var(--ice)"
+          >
+            <div
+              style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ice);margin-bottom:10px"
+            >
+              Se migra
+            </div>
+            <div style="font-size:11px;color:var(--muted);line-height:2">
+              filterOperatorErrors() → JS<br />changeCedulaAzulArray() → JS<br/>Frontend → React<br />Parser
+              XML → JSON nativo
+            </div>
+          </div>
+        </div>
+
+      <div class="rule"></div>
+
+      <!-- ══ 02 NUEVO SISTEMA ══ -->
+      <div class="s-header reveal">
+        <div class="s-eyebrow"><span>02 — Nueva Arquitectura</span></div>
+        <h2 class="s-title">Stack Propuesto</h2>
+        <p class="s-desc">
+          Se propone una nueva arquitectura desacoplada con un backend Node.js
+          que expone una API REST para que la consuma el frontend React, y maneja la
+          integración con el WS de TRGS. El nuevo sistema procesa archivos Excel
+          de forma nativa, transformando los datos a JSON y comunicándose con
+          el WS de TRGS mediante SOAP. La migración se realizará en paralelo al
+          sistema actual, asegurando la continuidad operativa. El WS de TRGS sigue siendo el destino final; solo cambia quién lo llama.
+        </p>
+      </div>
+
+      <div class="arch-grid">
+
+    <!-- REACT -->
+    <div class="arch-layer react-layer">
+      <div class="layer-tag">Frontend</div>
+      <div class="layer-name c-react">React.js + Vite</div>
+      <div class="layer-items">
+        <div class="layer-item">FormDatosDelTramite<div class="li-sub">tipo, año, modo adquisición, etc.</div></div>
+        <div class="layer-item">FormTitulares<div class="li-sub">titular principal + condominos</div></div>
+        <div class="layer-item">FormVehiculo<div class="li-sub">certificado, chasis</div></div>
+        <div class="layer-item">FormCedulasAzul<div class="li-sub">array dinámico</div></div>
+        <div class="layer-item">FormApoderados<div class="li-sub">DJ apoderados</div></div>
+        <div class="layer-item">FormGuardaHabitual</div>
+        <div class="layer-item">ExcelUpload<div class="li-sub">SheetJS → pre-carga formularios</div></div>
+        <div class="layer-item">Dashboard<div class="li-sub">historial, traID, PDFs</div></div>
+      </div>
+    </div>
+
+    <!-- ARROW -->
+    <div class="arch-connector">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#C0623A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- NODE -->
+    <div class="arch-layer node-layer">
+      <div class="layer-tag">Backend</div>
+      <div class="layer-name c-node">Node.js + Express</div>
+      <div class="layer-items">
+        <div class="layer-item">POST /api/tramites<div class="li-sub">recibe JSON, sanitiza, llama TRGS</div></div>
+        <div class="layer-item">GET /api/tramites/:id/formulario<div class="li-sub">obtener_formularios → PDF</div></div>
+        <div class="layer-item">POST /api/tramites/:id/cancelar<div class="li-sub">cancelar_tramite_01</div></div>
+        <div class="layer-item">sanitize.js<div class="li-sub">filterOperatorErrors migrado a JS</div></div>
+        <div class="layer-item">trgsService.js<div class="li-sub">eco → abrir_sesion → op → cerrar</div></div>
+        <div class="layer-item">excelParser.js<div class="li-sub">SheetJS → objeto tramite</div></div>
+      </div>
+    </div>
+
+    <!-- ARROW -->
+    <div class="arch-connector">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#C0623A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- DB -->
+    <div class="arch-layer db-layer">
+      <div class="layer-tag">Persistencia</div>
+      <div class="layer-name c-db">SQL Server</div>
+      <div class="layer-items">
+        <div class="layer-item">tramites<div class="li-sub">estado, traID, timestamps</div></div>
+        <div class="layer-item">titulares<div class="li-sub">FK → tramites</div></div>
+        <div class="layer-item">apoderados<div class="li-sub">FK → tramites</div></div>
+        <div class="layer-item">cedulas_azul<div class="li-sub">FK → tramites</div></div>
+        <div class="layer-item">vehiculos<div class="li-sub">FK → tramites</div></div>
+      </div>
+    </div>
+
+    <!-- ARROW -->
+    <div class="arch-connector">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="#C0623A" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- TRGS -->
+    <div class="arch-layer ext-layer">
+      <div class="layer-tag">Externo · sin cambios</div>
+      <div class="layer-name c-ext">TRGS Web Service</div>
+      <div class="layer-items">
+        <div class="layer-item">eco()<div class="li-sub">verificar disponibilidad</div></div>
+        <div class="layer-item">abrir_sesion()<div class="li-sub">retorna ingID</div></div>
+        <div class="layer-item">generar_tramite_01()<div class="li-sub">retorna traID</div></div>
+        <div class="layer-item">obtener_formularios()<div class="li-sub">PDF base64</div></div>
+        <div class="layer-item">cancelar_tramite_01()</div>
+        <div class="layer-item">cerrar_sesion()</div>
+      </div>
+    </div>
+
+      </div>
+
+      <div class="rule"></div>
+
+      <!-- ══ 03 DATA FLOW ══ -->
+      <div class="s-header reveal">
+        <div class="s-eyebrow"><span>03 — Flujo de Datos</span></div>
+        <h2 class="s-title">Paso a paso</h2>
+        <p class="s-desc">
+          Recorrido completo de un trámite desde que el usuario carga el Excel hasta que recibe el traID confirmado y descarga el PDF.
+        </p>
+      </div>
+
+      <div class="dataflow">
+    <div class="df-step">
+      <div class="df-left">
+        <div class="df-step-num">01</div>
+        <div class="df-actor" style="color:#61dafb">React</div>
+      </div>
+      <div class="df-right">
+        <div class="df-action">Usuario carga Excel o completa formulario web</div>
+        <div class="df-detail">SheetJS parsea .xlsx → objeto JS con datosDelTramite, datosTitulares, datosVehiculo, etc.</div>
+      </div>
+    </div>
+    <div class="df-step">
+      <div class="df-left">
+        <div class="df-step-num">02</div>
+        <div class="df-actor" style="color:#61dafb">React</div>
+      </div>
+      <div class="df-right">
+        <div class="df-action">Validación en el frontend antes de enviar</div>
+        <div class="df-detail">CUIT, DNI, email, CP requeridos · preview de los datos · confirmación del operador</div>
+      </div>
+    </div>
+    <div class="df-step">
+      <div class="df-left">
+        <div class="df-step-num">03</div>
+        <div class="df-actor" style="color:var(--moss)">Node.js</div>
+      </div>
+      <div class="df-right">
+        <div class="df-action">POST /api/tramites — guarda en DB con estado "pendiente"</div>
+        <div class="df-detail">INSERT tramites + titulares + vehiculo + apoderados + cedulas</div>
+      </div>
+    </div>
+    <div class="df-step">
+      <div class="df-left">
+        <div class="df-step-num">04</div>
+        <div class="df-actor" style="color:var(--moss)">Node.js</div>
+      </div>
+      <div class="df-right">
+        <div class="df-action">sanitize.js — limpia y normaliza todos los campos</div>
+        <div class="df-detail">tel → solo números · CUIT/doc → parseFloat · email → trim/sin acentos · ocupación → solo letras · CP → solo números</div>
+      </div>
+    </div>
+    <div class="df-step">
+      <div class="df-left">
+        <div class="df-step-num">05</div>
+        <div class="df-actor" style="color:var(--moss)">Node.js</div>
+      </div>
+      <div class="df-right">
+        <div class="df-action">trgsService.js — eco() → abrir_sesion() → generar_tramite_01()</div>
+        <div class="df-detail">node-soap · SOAP 1.1 · https://www.trgs.com.ar:443/service/index.php?wsdl</div>
+      </div>
+    </div>
+    <div class="df-step">
+      <div class="df-left">
+        <div class="df-step-num">06</div>
+        <div class="df-actor" style="color:var(--sienna)">TRGS WS</div>
+      </div>
+      <div class="df-right">
+        <div class="df-action">TRGS procesa el trámite y devuelve traID</div>
+        <div class="df-detail">rspID = 1 → éxito · rspID &lt; 0 → error con rspDescrip legible</div>
+      </div>
+    </div>
+    <div class="df-step">
+      <div class="df-left">
+        <div class="df-step-num">07</div>
+        <div class="df-actor" style="color:var(--moss)">Node.js</div>
+      </div>
+      <div class="df-right">
+        <div class="df-action">Guarda traID, actualiza estado → "completado" · cerrar_sesion()</div>
+        <div class="df-detail">UPDATE tramites SET traID = ?, estado = 'completado' WHERE id = ?</div>
+      </div>
+    </div>
+    <div class="df-step">
+      <div class="df-left">
+        <div class="df-step-num">08</div>
+        <div class="df-actor" style="color:#61dafb">React</div>
+      </div>
+      <div class="df-right">
+        <div class="df-action">Dashboard muestra traID confirmado + descarga PDF</div>
+        <div class="df-detail">GET /api/tramites/:id/formulario?tipo=F01 | F12 → PDF base64 → descarga</div>
+      </div>
+    </div>
+      </div>
+      
+      <div class="rule"></div>
+
+      <!-- ══ 04 ESTIMACIÓN ══ -->
+      <div class="s-header reveal">
+        <div class="s-eyebrow"><span>04 — Estimación</span></div>
+        <h2 class="s-title">Horas por Módulo</h2>
+        <p class="s-desc">
+          Desglose por área con las tareas concretas identificadas a partir del análisis del código existente (ASP, PHP, XMLs de prueba y manual del WS).
+        </p>
+      </div>
+
+<div class="est-grid">
+
+    <!-- BACKEND -->
+    <div class="est-card">
+      <div class="est-header">
+        <div class="est-header-title">Backend — Node.js + Express</div>
+        <div class="est-header-color" style="background:var(--moss)"></div>
+      </div>
+      <div class="est-rows">
+        <div class="est-row">
+          <div class="est-task">Setup proyecto, estructura, configuración<span class="task-sub">Express, cors, logger, estructura de carpetas</span></div>
+          <div class="est-hours" style="color:var(--moss)">2 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">Modelos DB + migraciones (Sequelize/Prisma)<span class="task-sub">tramites, titulares, vehiculos, apoderados, cedulas</span></div>
+          <div class="est-hours" style="color:var(--moss)">4 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">trgsService.js — cliente SOAP completo<span class="task-sub">eco, abrir_sesion, generar, obtener_formularios, cancelar, cerrar</span></div>
+          <div class="est-hours" style="color:var(--moss)">8 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">sanitize.js — migración de filterOperatorErrors<span class="task-sub">todas las reglas del PHP + casos edge identificados</span></div>
+          <div class="est-hours" style="color:var(--moss)">6 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">API routes: POST /tramites, GET /formulario, POST /cancelar<span class="task-sub">validación, manejo de errores TRGS, respuestas legibles</span></div>
+          <div class="est-hours" style="color:var(--moss)">8 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">excelParser.js — mapeo columnas → objeto tramite<span class="task-sub">SheetJS, múltiples secciones, validación de columnas</span></div>
+          <div class="est-hours" style="color:var(--moss)">8 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">Testing — servicios críticos (Jest)<span class="task-sub">sanitize unit tests, SOAP mock, casos GH/apoderados/condominio</span></div>
+          <div class="est-hours" style="color:var(--moss)">6 hs</div>
+        </div>
+      </div>
+      <div class="est-subtotal">
+        <div class="est-sub-label">Subtotal Backend</div>
+        <div class="est-sub-val" style="color:var(--moss)">42 hs</div>
+      </div>
+    </div>
+
+    <!-- FRONTEND -->
+    <div class="est-card">
+      <div class="est-header">
+        <div class="est-header-title">Frontend — React + Vite</div>
+        <div class="est-header-color" style="background:#61dafb"></div>
+      </div>
+      <div class="est-rows">
+        <div class="est-row">
+          <div class="est-task">Setup, routing (React Router), estado global<span class="task-sub">Vite, Zustand/Context, axios, estructura de módulos</span></div>
+          <div class="est-hours" style="color:#61dafb">4 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">Design system / algunos componentes base<span class="task-sub">Layout, estilos visuales, Input, Select, Button, Card, notificaciones</span></div>
+          <div class="est-hours" style="color:#61dafb">8 hs</div>
+        </div>
+        <!-- <div class="est-row">
+          <div class="est-task">FormDatosDelTramite + FormVehiculo<span class="task-sub">todos los campos de trgDatos + trgVehiculo</span></div>
+          <div class="est-hours" style="color:#61dafb">8 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">FormTitulares — lista dinámica<span class="task-sub">agregar/quitar titulares, cónyuge condicional, validaciones</span></div>
+          <div class="est-hours" style="color:#61dafb">10 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">FormApoderados + FormCedulasAzul + FormGuardaHabitual<span class="task-sub">arrays dinámicos, campos condicionales, tablas de códigos</span></div>
+          <div class="est-hours" style="color:#61dafb">10 hs</div>
+        </div> -->
+        <div class="est-row">
+          <div class="est-task">ExcelUpload — drag &amp; drop + previsualización<span class="task-sub">SheetJS, mapeo a secciones, detección de errores de columnas</span></div>
+          <div class="est-hours" style="color:#61dafb">8 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">Dashboard — historial de trámites (PROPUESTA)<span class="task-sub">tabla paginada, estados, descarga F01 y F12</span></div>
+          <div class="est-hours" style="color:#61dafb">10 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">Manejo de errores UI + loading states<span class="task-sub">errores TRGS legibles, retry, feedback visual al operador</span></div>
+          <div class="est-hours" style="color:#61dafb">6 hs</div>
+        </div>
+      </div>
+      <div class="est-subtotal">
+        <div class="est-sub-label">Subtotal Frontend</div>
+        <div class="est-sub-val" style="color:#61dafb">36 hs</div>
+      </div>
+    </div>
+
+    <!-- INFRA -->
+    <div class="est-card">
+      <div class="est-header">
+        <div class="est-header-title">Infraestructura &amp; Deploy (de ser necesario alguna modificación o agregado)</div>
+        <div class="est-header-color" style="background:var(--ice)"></div>
+      </div>
+      <div class="est-rows">
+        <div class="est-row">
+          <div class="est-task">Setup SQL Server <span class="task-sub">entorno local dev + producción</span></div>
+          <div class="est-hours" style="color:var(--ice)">4 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">Variables de entorno, secrets, configuración prod<span class="task-sub">credenciales TRGS, DB, CORS, HTTPS</span></div>
+          <div class="est-hours" style="color:var(--ice)">3 hs</div>
+        </div>
+        <!-- <div class="est-row">
+          <div class="est-task">Docker / PM2 + proxy inverso (nginx o Caddy)<span class="task-sub">según hosting elegido</span></div>
+          <div class="est-hours" style="color:var(--ice)">6 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">CI/CD básico (GitHub Actions)</div>
+          <div class="est-hours" style="color:var(--ice)">4 hs</div>
+        </div> -->
+      </div>
+      <div class="est-subtotal">
+        <div class="est-sub-label">Subtotal Infra</div>
+        <div class="est-sub-val" style="color:var(--ice)">7 hs</div>
+      </div>
+    </div>
+
+    <!-- QA -->
+    <div class="est-card">
+      <div class="est-header">
+        <div class="est-header-title">QA, Integridad de Datos &amp; UAT</div>
+        <div class="est-header-color" style="background:var(--sienna)"></div>
+      </div>
+      <div class="est-rows">
+        <div class="est-row">
+          <div class="est-task">Pruebas contra entorno testing TRGS<span class="task-sub">testingvdc.trgs.com.ar · casos GH, apoderados, condominio</span></div>
+          <div class="est-hours" style="color:var(--sienna)">3 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">Integridad de datos SQL Server<span class="task-sub">scripts de migración (de ser necesarios), validación de integridad de datos</span></div>
+          <div class="est-hours" style="color:var(--sienna)">2 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">UAT con usuarios finales + correcciones<span class="task-sub">Feedback con operadores reales (Gabi 😄)</span></div>
+          <div class="est-hours" style="color:var(--sienna)">1 hs</div>
+        </div>
+        <div class="est-row">
+          <div class="est-task">Documentación técnica<span class="task-sub">README, variables de entorno, guía de deploy</span></div>
+          <div class="est-hours" style="color:var(--sienna)">5 hs</div>
+        </div>
+      </div>
+      <div class="est-subtotal">
+        <div class="est-sub-label">Subtotal QA / Migración</div>
+        <div class="est-sub-val" style="color:var(--sienna)">11 hs</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CHART -->
+  <div class="chart-block">
+    <div class="chart-label">// distribución de horas por área</div>
+    <div class="chart-bars">
+      <div class="chart-row">
+        <div class="chart-row-label">Frontend (React)</div>
+        <div class="chart-track"><div class="chart-fill" style="width:75%;background:#61dafb"></div></div>
+        <div class="chart-val">36 hs</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-row-label">Backend (Node.js)</div>
+        <div class="chart-track"><div class="chart-fill" style="width:90%;background:var(--moss)"></div></div>
+        <div class="chart-val">42 hs</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-row-label">QA / Migración / UAT</div>
+        <div class="chart-track"><div class="chart-fill" style="width:53%;background:var(--sienna)"></div></div>
+        <div class="chart-val">11 hs</div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-row-label">Infra / Deploy</div>
+        <div class="chart-track"><div class="chart-fill" style="width:24%;background:var(--ice)"></div></div>
+        <div class="chart-val">7 hs</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOTAL -->
+  <div class="total-bar">
+    <div>
+      <div class="total-label">// Total estimado</div>
+      <div class="total-range">90 – 100 <span>horas</span></div>
+    </div>
+    <div class="total-breakdown">
+      <div class="tb-item">
+        <div class="tb-val" style="color:#61dafb">42</div>
+        <div class="tb-lbl">Frontend</div>
+      </div>
+      <div class="tb-item">
+        <div class="tb-val" style="color:var(--moss)">36</div>
+        <div class="tb-lbl">Backend</div>
+      </div>
+      <div class="tb-item">
+        <div class="tb-val" style="color:var(--sienna)">11</div>
+        <div class="tb-lbl">QA + Migración</div>
+      </div>
+      <div class="tb-item">
+        <div class="tb-val" style="color:var(--ice)">7</div>
+        <div class="tb-lbl">Infra</div>
+      </div>
+    </div>
+    <div class="total-equiv">
+      <div class="total-label">// Equivale a</div>
+      <div class="eq-val">2 – 3 semanas</div>
+      <div class="eq-sub">a dedicación full-time (8 hs/día)</div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="notes-grid">
+    <div class="note-card warn">
+      <div class="note-icon">⚠</div>
+      <div class="note-title">Variable: el Excel</div>
+      <div class="note-body">Si hay múltiples formatos posibles del Excel, el mapeo de columnas puede ser más complejo y sumar hasta hs adicionales al desarrollo.</div>
+    </div>
+    <div class="note-card warn">
+      <div class="note-icon">⚠</div>
+      <div class="note-title">Integridad y migración de datos</div>
+      <div class="note-body">Las 11 hs asumen un esquema SQL Server relativamente limpio y pocos o nulos datos a migrar. Si hay algún tipo de inconsistencias, puede incrementarse el tiempo de desarrollo.</div>
+    </div>
+    <div class="note-card info">
+      <div class="note-icon">—</div>
+      <div class="note-title">No incluido</div>
+      <div class="note-body">Autenticación/login de usuarios, roles y permisos, reportes avanzados, notificaciones por email. Cada módulo involucra nuevas estimaciones si se requieren en el alcance.</div>
+    </div>
+  </div>
+
+      <div class="rule"></div>
+
+      <!-- Proposal -->
+
+      <div class="s-header reveal">
+        <div class="s-eyebrow"><span>Presupuesto</span></div>
+        <h2 class="s-title">Presupuesto</h2>
+        <p class="s-desc">Presentación del presupuesto, dividido por módulos y el valor de cada uno de acuerdo a complejidad.</p>
+      </div>
+
+      <!-- Modules -->
+      {
+        totals_aux.modules.map((mod) => (
+          <ProposalModule
+            num={mod.num}
+            title={mod.title}
+            desc={mod.desc}
+            table_title={mod.table_title}
+            items={mod.items}
+            currency={meta.currency}
+            subtotal={mod.subtotal}
+            subtotal_first_month={mod.subtotal_first_month}
+            subtotal_label={mod.subtotal_label}
+            subtotal_label_first_month={mod.subtotal_label_first_month}
+            notes={mod.notes}
+          />
+        ))
+      }
+
+      <!-- Totals -->
+      <ProposalTotals
+        totals={{
+          ...totals_aux,
+          extras: {
+            label: totals_aux.extras.label,
+            value: subTotalWithExtras - subTotal,
+          },
+          clientBenefits: totals_aux.clientBenefits,
+          subscriptionPlans: totals_aux.subscriptionPlans,
+          subscriptionPlansNotes: totals_aux.subscriptionPlansNotes,
+          subtotal: { label: totals_aux.subtotal.label, value: subTotal },
+          total: {
+            label: totals_aux.total.label,
+            value: subTotalWithExtras * (1 - totals_aux.discount.percent / 100),
+          },
+        }}
+        currency={meta.currency}
+      />
+      <ProposalConditions conditions={conditions} />
+      <ProposalSignatures provider={provider} client={client} />
+    </div>
+  </div>
+
+  <ProposalFooter provider={provider} client={client} meta={meta} />
+</ProposalLayout>
+
+<style lang="scss">
+  @use '../../../styles/tokens' as *;
+  #content {
+    padding: 0 0 100px;
+    background: var(--obsidian);
+  }
+
+  /* ── FLOW (legacy) ── */
+  .flow-row {
+    display: flex; align-items: center; gap: 0;
+    overflow-x: auto; padding: 8px 0 24px;
+    margin-top: 30px;
+  }
+  .flow-node {
+    flex-shrink: 0;
+    background: var(--carbon);
+    border: 1px solid var(--border);
+    padding: 18px 22px;
+    min-width: 136px;
+    text-align: center;
+    position: relative;
+  }
+  .flow-node .fn-tag {
+    font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .flow-node .fn-name {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 13px; color: var(--white); margin-bottom: 4px;
+  }
+  .flow-node .fn-tech { font-size: 10px; color: var(--muted); }
+  .flow-node.dead { border-color: rgba(192,98,58,0.35); }
+  .flow-node.dead .fn-name { color: rgba(192,98,58,0.8); }
+  .flow-node.dead .fn-tech { color: var(--muted); }
+  .flow-node.ext  { border-color: rgba(123,175,196,0.35); background: var(--slate); }
+  .flow-node.ext  .fn-name { color: var(--ice); }
+
+  .dead-badge {
+    position: absolute; top: -9px; right: -9px;
+    width: 20px; height: 20px;
+    background: var(--sienna); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: var(--white);
+  }
+  .keep-badge {
+    position: absolute; top: -9px; right: -9px;
+    width: 20px; height: 20px;
+    background: var(--moss); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: var(--white);
+  }
+
+  .flow-arrow {
+    flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 6px; gap: 4px;
+  }
+  .arrow-line {
+    width: 44px; height: 1px; background: var(--border);
+    position: relative;
+  }
+  .arrow-line::after {
+    content: '';
+    position: absolute; right: -1px; top: -4px;
+    border-left: 6px solid var(--border);
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+  .arrow-label { font-size: 9px; color: var(--muted); text-align: center; max-width: 72px; letter-spacing: 0.04em; }
+
+   .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 32px 1fr 32px 1fr 32px 1fr;
+    gap: 3px;
+    align-items: start;
+    margin-bottom: 30px;
+  }
+  .arch-layer {
+    background: var(--carbon);
+    border-top: 2px solid var(--border);
+    padding: 24px;
+  }
+  .arch-layer.react-layer  { border-top-color: #61dafb; }
+  .arch-layer.node-layer   { border-top-color: var(--moss); }
+  .arch-layer.db-layer     { border-top-color: var(--ice); }
+  .arch-layer.ext-layer    { border-top-color: var(--sienna); }
+
+  .layer-tag { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .layer-name {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 15px; color: var(--white); margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+  .layer-name.c-react  { color: #61dafb; }
+  .layer-name.c-node   { color: var(--moss); }
+  .layer-name.c-db     { color: var(--ice); }
+  .layer-name.c-ext    { color: var(--sienna); }
+
+  .layer-items { display: flex; flex-direction: column; gap: 3px; }
+  .layer-item {
+    background: var(--slate);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    font-size: 11px; color: var(--body); line-height: 1.5;
+  }
+  .layer-item .li-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  .arch-connector {
+    display: flex; align-items: center; justify-content: center;
+    padding-top: 70px;
+  }
+
+  /* ── DATAFLOW ── */
+  .dataflow { display: flex; flex-direction: column; margin-bottom: 30px; }
+
+  .df-step {
+    display: grid;
+    grid-template-columns: 148px 1fr;
+  }
+  .df-left {
+    padding: 18px 20px 18px 0;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 4px;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .df-left::after {
+    content: '';
+    position: absolute; right: -5px; top: 22px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--obsidian); border: 1px solid var(--muted);
+  }
+  .df-step:hover .df-left::after { background: var(--sienna); border-color: var(--sienna); }
+
+  .df-step-num { font-size: 9px; letter-spacing: 0.18em; color: var(--muted); }
+  .df-actor {
+    font-family: 'Syne', sans-serif; font-weight: 600;
+    font-size: 11px; color: var(--subtle); text-align: right;
+  }
+  .df-right { padding: 18px 0 18px 24px; }
+  .df-action { font-size: 13px; color: var(--white); margin-bottom: 6px; font-family: 'Syne', sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+  .df-detail {
+    font-size: 10px; color: var(--muted);
+    background: var(--carbon); border: 1px solid var(--border);
+    padding: 4px 10px; display: inline-block; letter-spacing: 0.02em;
+  }
+
+  /* ── ESTIMATION ── */
+  .est-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+
+  .est-card { background: var(--carbon); }
+  .est-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .est-header-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 13px; color: var(--white); letter-spacing: -0.01em;
+  }
+  .est-header-color { width: 8px; height: 8px; border-radius: 50%; }
+
+  .est-rows { padding: 4px 0; }
+  .est-row {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 12px; padding: 10px 22px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .est-row:last-child { border-bottom: none; }
+  .est-task { font-size: 12px; color: var(--body); line-height: 1.5; }
+  .est-task .task-sub { font-size: 10px; color: var(--muted); display: block; margin-top: 2px; }
+  .est-hours {
+    font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+    color: var(--white); white-space: nowrap;
+    background: var(--slate); border: 1px solid var(--border);
+    padding: 3px 10px; min-width: 52px; text-align: center;
+  }
+
+  .est-subtotal {
+    display: grid; grid-template-columns: 1fr auto;
+    padding: 14px 22px;
+    background: var(--slate); border-top: 1px solid var(--border);
+  }
+  .est-sub-label { font-size: 10px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'Syne', sans-serif; font-weight: 600; }
+  .est-sub-val { font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 500; }
+
+  /* ── CHART ── */
+  .chart-block {
+    background: var(--carbon);
+    padding: 28px 32px;
+    margin-top: 3px;
+  }
+  .chart-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 24px; }
+  .chart-bars { display: flex; flex-direction: column; gap: 14px; }
+  .chart-row { display: grid; grid-template-columns: 176px 1fr 52px; gap: 16px; align-items: center; }
+  .chart-row-label { font-size: 11px; color: var(--body); text-align: right; }
+  .chart-track { height: 6px; background: var(--slate); }
+  .chart-fill { height: 100%; }
+  .chart-val { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-align: right; }
+
+  /* ── TOTAL ── */
+  .total-bar {
+    background: var(--carbon); border-top: 2px solid var(--sienna);
+    padding: 28px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px;
+    margin-top: 3px;
+  }
+  .total-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .total-range {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 36px; color: var(--white); letter-spacing: -0.03em; line-height: 1;
+  }
+  .total-range span { color: var(--sienna); font-size: 20px; font-weight: 400; font-family: 'DM Mono', monospace; }
+  .total-breakdown { display: flex; gap: 28px; flex-wrap: wrap; }
+  .tb-item { text-align: center; }
+  .tb-val { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px; color: var(--white); line-height: 1; }
+  .tb-lbl { font-size: 9px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px; }
+  .total-equiv { text-align: right; }
+  .total-equiv .eq-val {
+    font-family: 'DM Mono', monospace; font-size: 16px; color: var(--subtle);
+  }
+  .total-equiv .eq-sub { font-size: 10px; color: var(--muted); margin-top: 4px; letter-spacing: 0.06em; }
+
+  /* ── NOTES ── */
+  .notes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; margin-top: 3px; margin-bottom: 30px; }
+  .note-card { background: var(--carbon); padding: 24px 28px; }
+  .note-icon { font-size: 18px; margin-bottom: 10px; }
+  .note-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--white); margin-bottom: 8px; }
+  .note-body { font-size: 11px; color: var(--muted); line-height: 1.9; }
+  .note-card.warn { border-top: 2px solid var(--sienna); }
+  .note-card.info { border-top: 2px solid var(--moss); }
+
+   @media (max-width: 860px) {
+    .arch-grid { grid-template-columns: 1fr; }
+    .arch-connector { padding-top: 0; transform: rotate(90deg); }
+    .est-grid { grid-template-columns: 1fr; }
+    .notes-grid { grid-template-columns: 1fr; }
+    .total-bar { flex-direction: column; align-items: flex-start; }
+    .total-equiv { text-align: left; }
+  }
+</style>

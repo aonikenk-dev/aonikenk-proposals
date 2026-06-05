@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "ref_title": "Propuesta Ref. #",
+    "ref": "001",
+    "date": "Junio 2026",
+    "validity": "30 días",
+    "lang": "es",
+    "currency": "ARS",
+    "cover_tag": "Presupuesto, Plan y Estimación · Migración TRGS",
+    "proposal_desc": "migración de flujo de trabajo con WS TGRS"
+  },
+
+  "provider": {
+    "name": "aonikenk",
+    "tld": ".dev",
+    "tagline": "Software · Branding · Solutions",
+    "cover_slogan": "Crafted at the edge · 🗻 · ",
+    "slogan": "Crafted at the edge",
+    "email": "hello@aonikenk.dev",
+    "url": "aonikenk.dev",
+    "location": "Patagonia, Argentina"
+  },
+
+  "client": {
+    "name": "NetDriver",
+    "location": "La Plata, Buenos Aires, Argentina"
+  },
+
+  "intro": "Propuesta de migración de sistema legacy hacia un stack moderno para el procesamiento de archivo excel y comunicación con Web Service de TGRS. El proyecto incluye el desarrollo de una nueva interfaz para la gestión de los procesos actuales, y un nuevo backend para manejar la integración al Web Service de TGRS, contemplando la carga y procesamiento de archivos excel, y migración de datos desde el sistema legacy. La solución propuesta permitirá optimizar los flujos de trabajo, mejorar la eficiencia operativa y garantizar la continuidad del negocio durante y después de la migración.",
+
+  "modules": [
+    {
+      "id": "discovery",
+      "num": "01",
+      "title": "Relevamiento y Arquitectura",
+      "desc": "Análisis funcional completo del stack y flujo de trabajo actuales, definición de la arquitectura del sistema y plan de migración. Entrega de prototipo (MVP) para validación temprana y documento de especificación técnica y funcional aprobado por el cliente.",
+      "table_title": "RELEVAMIENTO Y ARQUITECTURA",
+      "items": [
+        { "name": "Relevamiento funcional",      "desc": "Entrevistas, reuniones, mapeo de stack y flujo de trabajo actuales y documentación de requerimientos",        "qty": "1", "price": 80000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Arquitectura del sistema",    "desc": "Diseño de arquitectura, stack tecnológico, modelo de datos (de ser necesario), etc.",          "qty": "1", "price": 120000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Prototipo (MVP) y Documento de especificación", "desc": "Presentación de un prototipo y entrega de documento técnico y funcional aprobado por el cliente",                 "qty": "1", "price": 60000, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 01",
+      "notes": [
+        "El relevamiento funcional se realizará mediante entrevistas con el equipo de NetDriver, análisis de los procesos actuales y documentación detallada de requerimientos. Se entregará un documento técnico con la arquitectura propuesta, modelo de datos y plan de migración, que deberá ser aprobado por el cliente antes de iniciar el desarrollo.",
+        "El prototipo (MVP) incluirá las funcionalidades básicas para validación temprana por parte del cliente, y se entregará junto con el documento de especificación técnica y funcional."
+      ]      
+    },
+    {
+      "id": "development",
+      "num": "02",
+      "title": "Desarrollo e Integración",
+      "desc": "Desarrollo del nuevo sistema según la arquitectura definida, incluyendo la integración con el Web Service de TGRS, desarrollo de la interfaz de gestión y migración de datos desde el sistema legacy.",
+      "table_title": "DESARROLLO E INTEGRACIÓN",
+      "items": [
+        { "name": "Backend",                 "desc": "Implementación del backend del sistema en Node y Express, definición de los endpoints, implementación de la lógica de negocio y comunicación con el Web Service de TGRS",           "qty": "1", "price": 250000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Frontend",          "desc": "Desarrollo de la interfaz en React, implementación de componentes y diseño del nuevo layout",              "qty": "1", "price": 200000, "show": true, "exclude_from_subtotal": false },
+        { "name": "QA|MIgración|UAT",                "desc": "Pruebas de calidad, migración y aceptación del usuario",             "qty": "1", "price": 70000, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 07"
+    },
+    {
+      "id": "infra",
+      "num": "03",
+      "title": "Infraestructura y Deploy",
+      "desc": "Configuración del entorno, deploy del sistema, migración inicial de datos."
+       ,
+      "table_title": "INFRAESTRUCTURA Y DEPLOY",
+      "items": [
+        { "name": "Setup",                 "desc": "Configuración de servidor, base de datos, dominio y certificados SSL",           "qty": "1", "price": 40000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Migración de datos (de ser necesario)",          "desc": "Importación y limpieza de datos, tanto en tablas como en formato de archivos Excel",              "qty": "1", "price": 30000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Manual de usuario",           "desc": "Documentación de la nueva arquitectura y manual de usuario del nuevo sistema",               "qty": "1", "price": 15000, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 07"
+    }
+  ],
+
+  "totals": {
+    "subtotal":          { "label": "Subtotal desarrollo inicial (módulos + extras)", "value": 0 },
+    "discount":          { "label": "Descuento cliente (10%)",  "percent": 10 },
+    "extras":            { "label": "Extras primer mes",                "value": 0 },
+    "subscriptionPlans": [],
+    "subscriptionPlansNotes": [],
+    "clientBenefits": [],
+    "total":             { "label": "TOTAL PRESUPUESTO",                "value": 0 },
+    "notes": [
+      "El total incluye un 10% de descuento por ser cliente de aonikenk.dev."      
+    ]
+  },
+
+  "conditions": [
+    { "key": "Forma de pago",    "value": "50% al inicio · 50% en la entrega final" },
+    { "key": "Facturación",    "value": "Sin factura o factura tipo C" },
+    { "key": "Plazo estimado",   "value": "2 a 3 semanas desde la aprobación del relevamiento funcional" },
+    { "key": "Metodología",      "value": "Desarrollo iterativo por módulos con entregables parciales y aprobación del cliente" },
+    { "key": "Revisiones",       "value": "2 rondas de revisión incluidas por módulo" },
+    { "key": "Stack tecnológico","value": "Node.js / React.js / SQL Server · Deploy en local de NetDriver o en hosting del cliente" },
+    { "key": "Hosting (servidor)", "value": "Propio de NetDriver" },
+    { "key": "Validez",          "value": "Este presupuesto tiene validez de 30 días desde su emisión (Junio 2026)" }
+  ]
+}
