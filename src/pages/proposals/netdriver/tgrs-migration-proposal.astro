@@ -14,11 +14,8 @@ import data from '../../../data/clients/netdriver/tgrs-migration-proposal.json';
 // ── Auth guard ────────────────────────────────────────────────
 const COOKIE_NAME = 'aonikenk_auth';
 const slug = 'NETDRIVER_TGRS_MIGRATION_PROPOSAL';
-const validCode   = process.env[`PROPOSAL_CODE_${slug}`]
-                 ?? process.env.PROPOSAL_CODE_DEFAULT;
-// const validCode =
-//   import.meta.env[`PROPOSAL_CODE_${slug}`] ??
-//   import.meta.env.PROPOSAL_CODE_DEFAULT;
+const envKey    = `PROPOSAL_CODE_${slug}`;
+const validCode = process.env[envKey] ?? import.meta.env[envKey] ?? process.env.PROPOSAL_CODE_DEFAULT ?? import.meta.env.PROPOSAL_CODE_DEFAULT ?? '';
 const cookie = Astro.cookies.get(COOKIE_NAME);
 
 if (!cookie || !validCode || cookie.value !== validCode) {

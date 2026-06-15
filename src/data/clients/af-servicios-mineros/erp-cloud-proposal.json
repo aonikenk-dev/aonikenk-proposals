@@ -2,7 +2,7 @@
   "meta": {
     "ref_title": "Propuesta Ref. #",
     "ref": "001",
-    "date": "Mayo 2026",
+    "date": "Junio 2026",
     "validity": "30 días",
     "lang": "es",
     "currency": "USD",
@@ -82,41 +82,41 @@
       "items": [
         { "name": "Registro de gastos",          "desc": "Categorización y registro de egresos por tipo, proyecto y centro de costo",      "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
         { "name": "Tesorería y cajas",           "desc": "Control de cajas, cuentas bancarias, cheques y movimientos internos",            "qty": "1", "price": 120, "show": true, "exclude_from_subtotal": false },
-        { "name": "Flujo de caja",               "desc": "Proyección de ingresos/egresos, alertas de saldo mínimo y reportes",            "qty": "1", "price": 180, "show": true, "exclude_from_subtotal": false }
+        { "name": "Flujo de caja",               "desc": "Proyección de ingresos/egresos, alertas de saldo mínimo y reportes",            "qty": "1", "price": 150, "show": true, "exclude_from_subtotal": false }
       ],
       "billing_type": "fixed",
       "subtotal_label": "Subtotal Módulo 03",
       "notes": []
     },
     {
-      "id": "access",
-      "num": "04",
-      "title": "Perfiles y Control de Acceso",
-      "desc": "Sistema de roles y permisos granulares por módulo y acción. Cada usuario accede sólo a lo que le corresponde según su rol dentro de la empresa.",
-      "table_title": "PERFILES Y CONTROL DE ACCESO",
-      "items": [
-        { "name": "Sistema de roles",            "desc": "Definición de roles predefinidos: Admin, Contador, Operador, RRHH, Solo lectura","qty": "1", "price": 70, "show": true, "exclude_from_subtotal": false },
-        { "name": "Permisos por módulo",         "desc": "Control granular: ver, crear, editar, eliminar por sección del sistema",         "qty": "1", "price": 70, "show": true, "exclude_from_subtotal": false },
-        { "name": "Log de auditoría",            "desc": "Registro de acciones por usuario: qué hizo, cuándo y desde qué dispositivo",    "qty": "1", "price": 200, "show": true, "exclude_from_subtotal": true, "exclude_from_total": true }
-      ],
-      "billing_type": "fixed",
-      "subtotal_label": "Subtotal Módulo 04",
-      "notes": [
-        "El costo del log de auditoría se incluye como un ítem aparte que no forma parte del subtotal general del proyecto debido a su naturaleza de seguridad avanzada y la infraestructura adicional que requiere para su implementación. El log de auditoría registra todas las acciones realizadas por los usuarios, con detalles de qué hicieron, cuándo y desde qué dispositivo. Este log es una medida de seguridad adicional para monitorear el uso del sistema y detectar posibles accesos no autorizados o actividades sospechosas."
-      ]
-    },
-    {
       "id": "stock",
-      "num": "05",
+      "num": "04",
       "title": "Gestión de Stock por Depósitos",
       "desc": "Control de inventario multi-depósito con trazabilidad de movimientos, alertas de stock mínimo y gestión de herramientas y equipos. El módulo de gestión de stock permitirá llevar un control detallado del inventario de productos, herramientas, insumos y equipos, con la posibilidad de gestionar múltiples depósitos o ubicaciones físicas (taller, obra, almacén central). Se implementará un sistema de trazabilidad de movimientos de stock, incluyendo ingresos, egresos, transferencias entre depósitos y ajustes de inventario. Además, se configurarán alertas de stock mínimo para cada artículo, con reportes de valorización de inventario y rotación de stock para facilitar la gestión eficiente del inventario."
        ,
       "table_title": "GESTIÓN DE STOCK POR DEPÓSITOS",
       "items": [
-        { "name": "ABM de artículos",            "desc": "Alta y gestión de productos, herramientas, insumos y equipos con código y descripción","qty": "1","price": 120, "show": true, "exclude_from_subtotal": false },
+        { "name": "ABM de artículos",            "desc": "Alta y gestión de productos, herramientas, insumos y equipos con código y descripción","qty": "1","price": 100, "show": true, "exclude_from_subtotal": false },
         { "name": "Múltiples depósitos",         "desc": "Control de stock por ubicación física: taller, obra, almacén central",          "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
         { "name": "Movimientos de stock",        "desc": "Ingresos, egresos, transferencias entre depósitos y ajustes de inventario",      "qty": "1", "price": 60, "show": true, "exclude_from_subtotal": false },
         { "name": "Alertas y reportes",          "desc": "Alertas de stock mínimo, valorización de inventario e informes de rotación",     "qty": "1", "price": 90, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 04"
+    },
+    {
+      "id": "operations",
+      "num": "05",
+      "title": "Operaciones y Mantenimiento",
+      "desc": "Gestión de maquinaria y flota, mantenimiento preventivo/correctivo, historial de activos y reportes de estado. El módulo de operaciones y mantenimiento permitirá gestionar toda la información relacionada con la maquinaria pesada y la flota de vehículos de la empresa. Se incluirá un sistema de alta, baja, modificación y búsqueda de maquinaria y vehículos, con seguimiento de horas de uso para maquinaria pesada y kilometraje para vehículos, así como alertas de mantenimientos próximos o vencidos. Además, se implementará un registro completo de mantenimientos preventivos, correctivos e inspecciones, con historial por activo y panel de alertas para vencimientos. El módulo también contará con reportes detallados sobre el estado general de la flota y maquinaria, valorización por tipo/categoría y exportación a PDF para facilitar la gestión operativa."
+       ,
+      "table_title": "OPERACIONES Y MANTENIMIENTO",
+      "items": [
+        { "name": "Dashboard de Operaciones",            "desc": "KPIs de flota/maquinaria, alertas de mantenimientos próximos/vencidos y resumen de estado por categoría","qty": "1","price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Gestión de Maquinaria",         "desc": "Alta, baja, modificación y búsqueda de maquinaria pesada, con seguimiento de horas de uso y alertas de mantenimiento por intervalo",          "qty": "1", "price": 130, "show": true, "exclude_from_subtotal": false },
+        { "name": "Gestión de Flota",        "desc": "Alta, baja, modificación y búsqueda de vehículos, con seguimiento de kilometraje y alertas de vencimiento de seguro/VTV",      "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Mantenimiento",          "desc": "Registro de mantenimientos (preventivos/correctivos/inspecciones), historial por activo y panel de alertas de vencimientos",     "qty": "1", "price": 120, "show": true, "exclude_from_subtotal": false },
+        { "name": "Reportes",          "desc": "Valorización de activos por tipo/categoría, estado general de flota y maquinaria, exportación a PDF",     "qty": "1", "price": 90, "show": true, "exclude_from_subtotal": false }
       ],
       "billing_type": "fixed",
       "subtotal_label": "Subtotal Módulo 05"
@@ -129,9 +129,9 @@
        ,
       "table_title": "MÓDULO RRHH",
       "items": [
-        { "name": "Legajos digitales",           "desc": "Ficha completa del empleado: datos personales, contrato, documentación adjunta", "qty": "1", "price": 150, "show": true, "exclude_from_subtotal": false },
-        { "name": "Liquidación de haberes",      "desc": "Cálculo básico de sueldos, adicionales, retenciones y recibos de sueldo",       "qty": "1", "price": 300, "show": true, "exclude_from_subtotal": false },
-        { "name": "Reportes de personal",        "desc": "Plantel activo, vencimientos de contratos, ausentismo y costos de nómina",      "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Legajos digitales",           "desc": "Ficha completa del empleado: datos personales, contrato, documentación adjunta", "qty": "1", "price": 130, "show": true, "exclude_from_subtotal": false },
+        { "name": "Liquidación de haberes",      "desc": "Cálculo básico de sueldos, adicionales, retenciones y recibos de sueldo",       "qty": "1", "price": 220, "show": true, "exclude_from_subtotal": false },
+        { "name": "Reportes de personal",        "desc": "Plantel activo, vencimientos de contratos, ausentismo y costos de nómina",      "qty": "1", "price": 90, "show": true, "exclude_from_subtotal": false },
         { "name": "Control de asistencia",       "desc": "Registro de entradas, salidas, ausencias, vacaciones y licencias",              "qty": "1", "price": 350, "show": true, "exclude_from_subtotal": true, "exclude_from_total": true }
       ],
       "billing_type": "fixed",
@@ -141,8 +141,45 @@
       ]
     },
     {
-      "id": "infra",
+      "id": "ai",
       "num": "07",
+      "title": "Inteligencia Artificial",
+      "desc": "Aplicación de IA para optimización de procesos y toma de decisiones. El módulo de inteligencia artificial permitirá integrar tecnologías de aprendizaje automático y análisis de datos para optimizar los procesos operativos y facilitar la toma de decisiones basada en evidencia."
+       ,
+      "table_title": "INTELIGENCIA ARTIFICIAL",
+      "items": [
+        { "name": "Copiloto IA (Yatel)",            "desc": "Asistente conversacional integrado al sistema, con identidad propia, respuestas contextuales sobre ventas, stock, RRHH y flota, widget flotante activable/desactivable","qty": "1","price": 200, "show": true, "exclude_from_subtotal": false },
+        { "name": "Business Intelligence",         "desc": "Dashboard de KPIs, tendencias de ingresos, márgenes y desglose de costos",          "qty": "1", "price": 130, "show": true, "exclude_from_subtotal": false },
+        { "name": "Analytics predictivo",        "desc": "Insights automáticos con severidad/confianza, proyecciones de ingresos y costos",      "qty": "1", "price": 120, "show": true, "exclude_from_subtotal": false },
+        { "name": "Panel de agentes",          "desc": "Gestión, monitoreo, programación y activación/desactivación de agentes automatizados",     "qty": "1", "price": 100, "show": true, "exclude_from_subtotal": false },
+        { "name": "Agente de recepción de comprobantes (WhatsApp/Email)",          "desc": "Recepción de facturas/comprobantes vía WhatsApp y email, procesamiento con IA y carga automática en Facturación (VER NOTA AL PIE)",     "qty": "1", "price": 200, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 07",
+      "notes": [
+        "El agente de recepción de comprobantes requiere consumo de servicios externos (modelo de IA para extracción de datos + WhatsApp Business API), cuyo costo es variable según el volumen de documentos procesados. Este consumo se factura como parte del abono mensual de suscripción del módulo IA y no está incluido en el subtotal de implementación. A su vez este es el ítem de mayor peso ya que, igual que la facturación electrónica del Módulo 02, tiene una alta complejidad técnica (integración con APIs externas + lógica de extracción/matching)"
+      ]
+    },
+    {
+      "id": "access",
+      "num": "08",
+      "title": "Perfiles y Control de Acceso",
+      "desc": "Sistema de roles y permisos granulares por módulo y acción. Cada usuario accede sólo a lo que le corresponde según su rol dentro de la empresa.",
+      "table_title": "PERFILES Y CONTROL DE ACCESO",
+      "items": [
+        { "name": "Sistema de roles",            "desc": "Definición de roles predefinidos: Admin, Contador, Operador, RRHH, Solo lectura","qty": "1", "price": 70, "show": true, "exclude_from_subtotal": false },
+        { "name": "Permisos por módulo",         "desc": "Control granular: ver, crear, editar, eliminar por sección del sistema",         "qty": "1", "price": 70, "show": true, "exclude_from_subtotal": false },
+        { "name": "Log de auditoría",            "desc": "Registro de acciones por usuario: qué hizo, cuándo y desde qué dispositivo",    "qty": "1", "price": 200, "show": true, "exclude_from_subtotal": true, "exclude_from_total": true }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 08",
+      "notes": [
+        "El costo del log de auditoría se incluye como un ítem aparte que no forma parte del subtotal general del proyecto debido a su naturaleza de seguridad avanzada y la infraestructura adicional que requiere para su implementación. El log de auditoría registra todas las acciones realizadas por los usuarios, con detalles de qué hicieron, cuándo y desde qué dispositivo. Este log es una medida de seguridad adicional para monitorear el uso del sistema y detectar posibles accesos no autorizados o actividades sospechosas."
+      ]
+    },
+    {
+      "id": "infra",
+      "num": "09",
       "title": "Infraestructura, Deploy y Capacitación",
       "desc": "Configuración del entorno cloud, deploy del sistema, migración inicial de datos y capacitación del equipo. El proyecto incluye la configuración completa del entorno cloud para alojar el sistema ERP, incluyendo la configuración de servidores, bases de datos, dominios y certificados SSL para garantizar la seguridad y disponibilidad del sistema. Se realizará el deploy del sistema en un entorno de producción cloud, asegurando su correcto funcionamiento y rendimiento. Además, se llevará a cabo la migración inicial de datos desde las planillas Excel actuales al nuevo sistema, con limpieza y validación de datos para asegurar su integridad. Finalmente, se brindarán sesiones de capacitación para el equipo de AF, con el objetivo de garantizar una transición fluida al nuevo sistema y que los usuarios puedan aprovechar al máximo todas las funcionalidades implementadas."
        ,
@@ -154,7 +191,7 @@
         { "name": "Manual de usuario",           "desc": "Documentación de uso del sistema adaptada a los procesos de AF",               "qty": "1", "price": 15, "show": true, "exclude_from_subtotal": false }
       ],
       "billing_type": "fixed",
-      "subtotal_label": "Subtotal Módulo 07"
+      "subtotal_label": "Subtotal Módulo 09"
     }
   ],
 
@@ -163,15 +200,19 @@
     "discount":          { "label": "Descuento cliente existente (10%)",  "percent": 10 },
     "extras":            { "label": "Extras primer mes",                "value": 0 },
     "subscriptionPlans": [
-      { "label": "ERP Basic (Módulos 02, 03 y 04)",  "description": "Plan básico con funcionalidades esenciales", "value": 150 },
-      { "label": "ERP Pro (todo lo del Basic + Módulo 05)",   "description": "Plan profesional con funcionalidades avanzadas", "value": 200 },
-      { "label": "ERP Enterprise (sistema completo + servicios adicionales a demanda)", "description": "Plan empresarial con todas las funcionalidades y servicios personalizados", "value": 330 }
+      { "label": "ERP Basic",  "description": "Módulos Facturación, Flow de Ingresos y Egresos, y Gestión de Stock └─▶ Plan básico con funcionalidades esenciales. Gráficos y reportes básicos. ** Hasta 5 usuarios **", "value": 230 },
+      { "label": "ERP Pro",   "description": "Todo lo del Basic + Módulo Operaciones (Maquinaria, Flota y Mantenimiento) + Módulo de RRHH └─▶ Plan profesional con funcionalidades avanzadas. Disponibilidad de gráficos y reportes avanzados. ** Hasta 10 usuarios **", "value": 420 },
+      { "label": "ERP Enterprise", "description": "Sistema completo + Módulo de IA + más personalizaciones └─▶ Plan empresarial con todas las funcionalidades, reportes, gráficos y analítica avanzada, más el Módulo de IA — incluye agente de recepción de comprobantes vía WhatsApp/Email con un tope de ~150 documentos procesados por mes —, y servicios personalizados a demanda. Soporte y consultoría pesonalizada con prioridad.  ** Usuarios ilimitados **", "value": 550 },
+      { "label": "** Módulo de IA como extra mensual", "description": "Si se opta por no contratar el plan Enterprise, el Módulo de IA se puede agregar como un extra mensual al plan que se elija — incluye agente de recepción de comprobantes vía WhatsApp/Email con un tope de ~150 documentos procesados por mes", "value": 90 },
+      { "label": "** Plan personalizado", "description": "Plan de suscripción personalizado acordado con el cliente según necesidades específicas", "value": 0 }
     ],
     "subscriptionPlansNotes": [
       "El cobro de la suscripción se comenzará a aplicar a partir del mes 7 luego de la entrega final del sistema. Los primeros 6 meses serán bonificados al 100%.",
       "Para cada plan se aplicará un descuento por pago semestral o anual.",
       "El costo de mantenimiento mínimo, que garantiza el correcto funcionamiento del sistema, está incluido en el precio de la suscripción. Para un plan de mantenimiento adicional perzonalizado, se aplicará un cargo extra.",
-      "El costo mensual podrá verse afectado por el volumen de datos y usuarios, el hosting elegido (tanto para el código fuente como para los datos (base de datos)) y las funcionalidades adicionales seleccionadas."
+      "El costo mensual podrá verse afectado por el volumen de datos y usuarios, el hosting elegido (tanto para el código fuente como para los datos (base de datos)) y las funcionalidades adicionales seleccionadas.",
+      "El valor del Módulo de IA contempla un 'uso razonable' del Copiloto Yatel, estableciendo un límite de hasta 300 consultas por usuario habilitado por mes (por consulta se entiende a una pregunta realizada a Yatel, sin importar qué tan larga sea). Este límite de consultas estará reflejado en la sección de Configuración, donde se mostrará el progreso de uso del Copiloto (por ej. 128 de 300 consultas utilizadas este mes (43%)). En caso de requerir un uso más intensivo del módulo de IA, que implique un consumo elevado de recursos o consultas al Copiloto Yatel, se aplicará un cargo adicional en función del volumen de uso que exceda el umbral establecido como 'uso razonable'.",
+      "Los Agentes de IA se dividen en dos categorías según su perfil de costo. Categoría A: agentes programados/de monitoreo (por ej. Centinela de Stock, Alertas de Mantenimiento, Reporte Semanal Financiero, Conciliador de Liquidaciones, etc.), que están incluídos en el planes Pro/Enterprise sin costo adicional. Categoría B: agentes de comunicación externa (como por ej. el de Recepción de comprobantes WhatsApp/Email, el Asistente de cobranzas que envía recordatorios por WhatsApp/Email, etc.) que comparten un cupo de interaciones por mes (definido en aprox. 150 interaciones/mes)"
     ],
     "clientBenefits": [],
     "total":             { "label": "TOTAL DESARROLLO INICIAL",                "value": 0 },
@@ -188,6 +229,6 @@
     { "key": "Revisiones",       "value": "2 rondas de revisión incluidas por módulo" },
     { "key": "Stack tecnológico","value": "Next.js / Node.js / PostgreSQL · Deploy en Vercel + Supabase o Railway (puede variar según necesidades, funcionalidades elegidas, etc.)" },
     { "key": "Hosting (servidor)", "value": "Se encuentra incluido en el precio de la suscripción. Si el cliente requiere un hosting adicional, se aplicará un cargo extra. Si, por otro lado, el cliente prefiere gestionar su propio hosting, podrá hacerlo bajo su responsabilidad, y se descontará el monto del valor de la suscripción." },
-    { "key": "Validez",          "value": "Este presupuesto tiene validez de 30 días desde su emisión (Mayo 2026)" }
+    { "key": "Validez",          "value": "Este presupuesto tiene validez de 30 días desde su emisión (Junio 2026)" }
   ]
 }
