@@ -69,9 +69,9 @@
        ,
       "table_title": "INFRAESTRUCTURA Y DEPLOY",
       "items": [
-        { "name": "Setup",                 "desc": "Configuración de servidor, base de datos, dominio y certificados SSL",           "qty": "1", "price": 40000, "show": true, "exclude_from_subtotal": false },
-        { "name": "Migración de datos (de ser necesario)",          "desc": "Importación y limpieza de datos, tanto en tablas como en formato de archivos Excel",              "qty": "1", "price": 30000, "show": true, "exclude_from_subtotal": false },
-        { "name": "Manual de usuario",           "desc": "Documentación de la nueva arquitectura y manual de usuario del nuevo sistema",               "qty": "1", "price": 15000, "show": true, "exclude_from_subtotal": false }
+        { "name": "Setup",                 "desc": "Configuración de servidor, base de datos, dominio y certificados SSL",           "qty": "1", "price": 0, "show": true, "exclude_from_subtotal": false },
+        { "name": "Migración de datos (de ser necesario)",          "desc": "Importación y limpieza de datos, tanto en tablas como en formato de archivos Excel",              "qty": "1", "price": 0, "show": true, "exclude_from_subtotal": false },
+        { "name": "Manual de usuario",           "desc": "Documentación de la nueva arquitectura y manual de usuario del nuevo sistema",               "qty": "1", "price": 0, "show": true, "exclude_from_subtotal": false }
       ],
       "billing_type": "fixed",
       "subtotal_label": "Subtotal Módulo 07"
