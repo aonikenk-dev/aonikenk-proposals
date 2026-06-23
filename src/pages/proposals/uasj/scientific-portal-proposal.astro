@@ -1,0 +1,188 @@
+---
+import ProposalLayout     from '../../../layouts/ProposalLayout.astro';
+import ProposalNav        from '../../../components/ProposalNav.astro';
+import ProposalCover      from '../../../components/ProposalCover.astro';
+import ProposalModule     from '../../../components/ProposalModule.astro';
+import ProposalTotals     from '../../../components/ProposalTotals.astro';
+import ProposalConditions from '../../../components/ProposalConditions.astro';
+import ProposalSignatures from '../../../components/ProposalSignatures.astro';
+import ProposalFooter     from '../../../components/ProposalFooter.astro';
+
+// ── Import data from JSON ─────────────────────────────────────
+import data from '../../../data/clients/uasj/scientific-portal-proposal.json';
+
+// ── Auth guard ────────────────────────────────────────────────
+const COOKIE_NAME = 'aonikenk_auth';
+const slug        = 'UASJ_SCIENTIFIC_PORTAL_PROPOSAL';
+const envKey    = `PROPOSAL_CODE_${slug}`;
+const validCode = process.env[envKey] ?? import.meta.env[envKey] ?? process.env.PROPOSAL_CODE_DEFAULT ?? import.meta.env.PROPOSAL_CODE_DEFAULT ?? '';
+const cookie      = Astro.cookies.get(COOKIE_NAME);
+
+if (!cookie || !validCode || cookie.value !== validCode) {
+  return Astro.redirect(`/login?redirect=${Astro.url.pathname}`, 302);
+}
+// ─────────────────────────────────────────────────────────────
+
+
+interface Item {
+  name: string;
+  desc: string;
+  qty: string;
+  price: number;
+  show: boolean;
+  exclude_from_subtotal?: boolean;
+}
+
+const { meta, provider, client, intro, modules, totals, conditions } = data;
+
+const pageTitle       = `Presupuesto #${meta.ref} — ${client.name} · ${provider.name}${provider.tld}`;
+const pageDescription = `Propuesta de ${meta.proposal_desc} para ${client.name}, preparada por ${provider.name}${provider.tld}.`;
+
+let subTotal = 0;
+let subTotalWithExtras = 0;
+const totals_aux: {
+  modules: { 
+    num: string;
+    title: string;
+    desc: string;
+    table_title: string;
+    items: Item[];
+    subtotal_label: string;
+    currency: string;
+    subtotal: number;
+    subtotal_first_month: number;
+    subtotal_label_first_month?: string;
+    notes?: string[]; 
+  }[];
+  subtotal: { label: string; value: number };
+  extras: { label: string; value: number };
+  discount: { label: string; percent: number };
+  clientBenefits: { label: string; value: number; }[];
+  subscriptionPlans: { label: string; description: string; value: number; }[];
+  subscriptionPlansNotes?: string[];
+  total: { label: string; value: number };
+  notes: any[];
+} = {
+  modules: [],
+  subtotal: { label: totals.subtotal.label, value: 0 },
+  extras: { label: totals.extras?.label, value: totals.extras?.value },
+  clientBenefits: totals.clientBenefits,
+  subscriptionPlans: totals.subscriptionPlans,
+  subscriptionPlansNotes: totals.subscriptionPlansNotes,
+  discount: totals.discount,
+  total:  totals.total,
+  notes: totals.notes || [],
+};
+
+modules.map(mod => {
+            const subTotalModule = mod.items.filter(item => item.show && !(item.exclude_from_subtotal || item.exclude_from_total)).reduce((acc, item) => acc + (item.price * parseInt(item.qty)), 0);
+            const subTotalFirstMonthModule = mod.items.filter(item => item.show && !item.exclude_from_total).reduce((acc, item) => acc + (item.price * parseInt(item.qty)), 0);
+            subTotal += subTotalModule;   
+            subTotalWithExtras += subTotalFirstMonthModule;         
+            totals_aux.modules = [...totals_aux.modules, {
+              num: mod.num,
+              title: mod.title,
+              table_title: mod.table_title,
+              desc: mod.desc,
+              items: mod.items,
+              subtotal_label: mod.subtotal_label,
+              subtotal_label_first_month: mod.subtotal_label_first_month,
+              currency: meta.currency,
+              subtotal: subTotalModule,
+              subtotal_first_month: subTotalFirstMonthModule,
+              notes: mod.notes              
+            }]
+  });
+  
+
+
+---
+
+<ProposalLayout title={pageTitle} description={pageDescription}>
+
+  <!-- Nav -->
+  <ProposalNav
+    name={provider.name}
+    tld={provider.tld}
+    ref={meta.ref}
+    date={meta.date}
+  />
+
+  <!-- Cover -->
+  <ProposalCover
+    provider={provider}
+    client={client}
+    meta={meta}
+    totalValue={(subTotalWithExtras * (1 - totals_aux.discount.percent / 100)).toFixed(2)}
+  />
+
+  <!-- Main content -->
+  <div id="content">
+    <div class="p-inner">
+
+      <!-- Intro -->
+      <div class="s-header reveal">
+        <div class="s-eyebrow"><span>Introducción</span></div>
+        <h2 class="s-title">Contexto del proyecto</h2>
+        <p class="s-desc">{intro}</p>
+      </div>
+      <div class="rule"></div>
+
+      <div class="s-modules">
+        <!-- Service modules (driven by JSON) -->
+        {
+          totals_aux.modules.map(mod => (                                
+              <ProposalModule
+                num={mod.num}
+                title={mod.title}
+                desc={mod.desc}
+                table_title={mod.table_title}
+                items={mod.items}
+                currency={meta.currency}
+                subtotal={mod.subtotal}
+                subtotal_first_month={mod.subtotal_first_month}
+                subtotal_label={mod.subtotal_label}
+                subtotal_label_first_month={mod.subtotal_label_first_month}
+                notes={mod.notes}
+              />
+            )
+          )
+        }
+      </div>
+
+      <!-- Totals -->
+      <ProposalTotals 
+          totals={
+          {
+            ...totals_aux, 
+            extras: { label: totals_aux.extras.label, value: (subTotalWithExtras - subTotal) }, 
+            subtotal: { label: totals_aux.subtotal.label, value: subTotal }, 
+            clientBenefits: totals_aux.clientBenefits,
+            subscriptionPlans: totals_aux.subscriptionPlans,
+            subscriptionPlansNotes: totals_aux.subscriptionPlansNotes,
+            total: { label: totals_aux.total.label, value: (subTotalWithExtras * (1 - totals_aux.discount.percent / 100)) }
+          }} 
+          currency={meta.currency}/>
+
+      <!-- Conditions -->
+      <ProposalConditions conditions={conditions} />
+
+      <!-- Signatures -->
+      <ProposalSignatures provider={provider} client={client} />
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <ProposalFooter provider={provider} client={client} meta={meta} />
+
+</ProposalLayout>
+
+<style lang="scss">
+  @use '../../../styles/tokens' as *;
+
+  #content {
+    padding: 0 0 100px;
+    background: var(--obsidian);
+  }
+</style>

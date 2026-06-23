@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "ref_title": "Propuesta Ref. #",
+    "ref": "001",
+    "date": "Junio 2026",
+    "validity": "30 días",
+    "lang": "es",
+    "currency": "ARS",
+    "cover_tag": "Propuesta · Portal de Divulgación Científica",
+    "proposal_desc": "diseño y desarrollo del portal San Julián Hace Ciencia"
+  },
+
+  "provider": {
+    "name": "aonikenk",
+    "tld": ".dev",
+    "tagline": "Software · Branding · Solutions",
+    "cover_slogan": "Crafted at the edge · 🗻 · ",
+    "slogan": "Crafted at the edge",
+    "email": "hello@aonikenk.dev",
+    "url": "aonikenk.dev",
+    "location": "Patagonia, Argentina"
+  },
+
+  "client": {
+    "name": "Unidad Académica San Julián (UNPA–UASJ)",
+    "location": "Puerto San Julián, Santa Cruz, Argentina"
+  },
+
+  "intro": "La presente propuesta contempla el diseño, desarrollo e implementación del portal web 'San Julián Hace Ciencia', una plataforma de divulgación científica para la UNPA–UASJ. El proyecto tiene como objetivo crear un canal digital de acceso público que traduzca la producción académica y científica de la universidad en contenidos accesibles, visuales e interactivos para la comunidad general, docentes y estudiantes de todos los niveles. La solución se construye sobre una arquitectura headless moderna: un panel de administración de contenidos para uso interno del equipo editorial, y un portal público de diseño propio que consume y presenta ese contenido. Ambas capas están desacopladas, lo que garantiza independencia tecnológica, escalabilidad y un diseño completamente a medida del proyecto. El portal priorizará la accesibilidad universal, la distribución multiplataforma del contenido, y contará con un módulo de métricas para el seguimiento del impacto y alcance de cada publicación.",
+
+  "context": {
+    "title": "Contexto y enfoque editorial-técnico",
+    "body": "La UNPA–UASJ produce información relevante sobre el territorio patagónico en sus dimensiones ambiental, social, histórica y económica. Sin embargo, ese conocimiento queda mayormente encapsulado en formatos académicos de acceso restringido. 'San Julián Hace Ciencia' propone romper esa barrera mediante una plataforma que organice y presente esos contenidos en formatos accesibles: textos de divulgación, infografías, podcasts, videos y materiales didácticos, organizados en cinco áreas temáticas: Ambiente, Sociedad, Historia, Economía y Desarrollo. La arquitectura propuesta desacopla completamente el sistema de gestión de contenidos del portal público, permitiendo que el equipo editorial trabaje con una interfaz familiar e intuitiva, mientras el portal público proyecta una identidad visual y una experiencia de usuario 100% personalizada, sin restricciones de plantillas o plataformas genéricas. Esta separación también protege la información institucional: el sistema de gestión nunca es visible ni accesible para los visitantes del sitio."
+  },
+
+  "architecture": {
+    "title": "Arquitectura del sistema",
+    "layers": [
+      {
+        "id": "cms",
+        "label": "Capa de Gestión de Contenidos (Backend)",
+        "desc": "Panel de administración interno para el equipo editorial de la UNPA–UASJ. Permite crear, editar, organizar y publicar artículos, infografías, podcasts, videos y materiales didácticos por área temática. Incluye gestión de roles (editor, colaborador, revisor) y flujo de aprobación antes de publicación.",
+        "tech": "Headless CMS (WordPress REST API o Payload CMS)",
+        "visible_to_public": false
+      },
+      {
+        "id": "api",
+        "label": "Capa de API",
+        "desc": "Interfaz de comunicación entre el CMS y el portal público. El portal consume el contenido exclusivamente a través de esta capa, garantizando que el sistema de administración permanezca completamente oculto al público.",
+        "tech": "REST API / GraphQL",
+        "visible_to_public": false
+      },
+      {
+        "id": "frontend",
+        "label": "Capa del Portal Público (Frontend)",
+        "desc": "Sitio web público de diseño completamente a medida. Organizado en cinco áreas temáticas. Cada área presenta sus contenidos en múltiples formatos (artículos, infografías, podcasts, videos, materiales didácticos). Incluye funcionalidades de accesibilidad avanzada, búsqueda, compartir en redes sociales y suscripción a novedades.",
+        "tech": "Next.js (React) · Tailwind CSS · Vercel",
+        "visible_to_public": true
+      },
+      {
+        "id": "analytics",
+        "label": "Capa de Métricas y Analytics",
+        "desc": "Sistema de seguimiento del comportamiento de los visitantes del portal. Panel de métricas accesible únicamente para el equipo de la UNPA–UASJ. Registra visitas, origen del tráfico, contenidos más consultados, tiempo de lectura y alcance geográfico.",
+        "tech": "Google Analytics 4 + panel interno o Plausible Analytics (opción privacy-first)",
+        "visible_to_public": false
+      }
+    ]
+  },
+
+  "modules": [
+    {
+      "id": "discovery",
+      "num": "01",
+      "title": "Relevamiento y Arquitectura",
+      "desc": "Análisis funcional del proyecto, definición de la arquitectura del sistema, estructura de contenidos y áreas temáticas, y entrega de prototipo navegable para validación antes del desarrollo. Se documenta el flujo de trabajo editorial: cómo se crea, revisa, aprueba y publica cada pieza de contenido.",
+      "table_title": "RELEVAMIENTO Y ARQUITECTURA",
+      "items": [
+        { "name": "Relevamiento funcional",   "desc": "Entrevistas con el equipo de UASJ, mapeo de tipos de contenido y flujos editoriales",              "qty": "1", "price": 20000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Arquitectura del sistema",             "desc": "Diseño de la arquitectura headless, stack tecnológico, modelo de datos y APIs",           "qty": "1", "price": 50000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Prototipo navegable",     "desc": "Prototipo de baja/media fidelidad del portal y panel admin para validación del cliente",   "qty": "1", "price": 30000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Documento de especificación técnica",  "desc": "Documento técnico-funcional aprobado por el cliente antes de iniciar el desarrollo",       "qty": "1", "price": 10000,  "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 01",
+      "notes": [
+        "El relevamiento incluirá entrevistas con el equipo de UASJ y referentes del proyecto para mapear todos los tipos de contenido, categorías, roles de usuario y flujos de publicación.",
+        "El prototipo navegable deberá ser aprobado por el cliente antes de iniciar el desarrollo del Módulo 02."
+      ]
+    },
+    {
+      "id": "cms_setup",
+      "num": "02",
+      "title": "Panel de Administración de Contenidos (CMS)",
+      "desc": "Configuración e implementación del sistema de gestión de contenidos para uso exclusivo del equipo editorial de la UNPA–UASJ. Incluye estructura de contenidos por área temática, tipos de contenido diferenciados (artículo, infografía, podcast, video, material didáctico, documento académico), gestión de autores, sistema de roles y flujo de aprobación editorial.",
+      "table_title": "PANEL DE ADMINISTRACIÓN DE CONTENIDOS",
+      "items": [
+        { "name": "Configuración del CMS",               "desc": "Instalación, configuración y personalización del sistema de gestión de contenidos",       "qty": "1", "price": 70000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Estructura de contenidos",            "desc": "Definición de 5 áreas temáticas, tipos de contenido y campos personalizados por formato", "qty": "1", "price": 20000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Gestión de roles y usuarios",         "desc": "Roles: Administrador, Editor, Colaborador, Revisor. Flujo de aprobación pre-publicación",  "qty": "1", "price": 50000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Soporte multimedia",                  "desc": "Gestión de imágenes, infografías (SVG/PNG), archivos de audio, videos (YouTube/Spotify embed o carga directa) y PDFs", "qty": "1", "price": 50000, "show": true, "exclude_from_subtotal": false },
+        { "name": "API de contenidos",                   "desc": "Configuración de la API REST/GraphQL que alimenta el portal público",                     "qty": "1", "price": 30000,  "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 02",
+      "notes": [
+        "El panel de administración es de uso exclusivo interno. No es visible ni accesible para los visitantes del portal público.",
+        "Los videos y podcasts pueden cargarse directamente en el sistema o vincularse desde plataformas externas (YouTube, Spotify, SoundCloud) según la preferencia del equipo de UASJ."
+      ]
+    },
+    {
+      "id": "portal",
+      "num": "03",
+      "title": "Portal Público — San Julián Hace Ciencia",
+      "desc": "Diseño y desarrollo completo del portal público de divulgación científica. Sitio de diseño propio, completamente a medida, organizado en cinco áreas temáticas: Ambiente, Sociedad, Historia, Economía y Desarrollo. Cada área presenta contenidos en múltiples formatos con navegación clara e intuitiva. Incluye página de inicio, páginas de área temática, páginas de artículo/pieza de contenido, buscador y sección de novedades.",
+      "table_title": "PORTAL PÚBLICO",
+      "items": [
+        { "name": "Diseño visual (UI/UX)",               "desc": "Diseño de identidad visual del portal, sistema de componentes y guía de estilos",        "qty": "1", "price": 50000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Desarrollo del portal",     "desc": "Desarrollo frontend completo: inicio, áreas temáticas, artículos, buscador, novedades", "qty": "1", "price": 90000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Integración con CMS (API)",           "desc": "Conexión del portal con el CMS para mostrar contenido en tiempo real",                   "qty": "1", "price": 20000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Buscador de contenidos",              "desc": "Buscador por palabra clave con filtros por área temática y tipo de contenido",           "qty": "1", "price": 30000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Página de cada pieza de contenido",   "desc": "Vista detallada de artículo, infografía, podcast, video o material didáctico con metadata, autor y área", "qty": "1", "price": 60000, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 03",
+      "notes": [
+        "El diseño visual será desarrollado específicamente para este proyecto, reflejando la identidad del territorio patagónico y la misión de divulgación de la UNPA–UASJ.",
+        "El portal es completamente responsivo (mobile, tablet, desktop) y con soporte de accesibilidad (ver Módulo 04)."
+      ]
+    },
+    {
+      "id": "accessibility",
+      "num": "04",
+      "title": "Accesibilidad Universal",
+      "desc": "Implementación de un conjunto completo de funcionalidades de accesibilidad para garantizar que el portal pueda ser utilizado por toda la comunidad, incluyendo personas con discapacidades visuales, auditivas, motoras o cognitivas. El portal apuntará a cumplir con las pautas WCAG 2.1 nivel AA.",
+      "table_title": "ACCESIBILIDAD UNIVERSAL",
+      "items": [
+        { "name": "Control de tamaño de texto",          "desc": "Botones para aumentar/disminuir el tamaño del texto en toda la interfaz",               "qty": "1", "price": 0,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Modo alto contraste",                 "desc": "Alternancia entre modo claro, oscuro y alto contraste para usuarios con baja visión",    "qty": "1", "price": 0,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Lectura en voz alta (Text-to-Speech)","desc": "Función de dictado por voz del texto de los artículos usando Web Speech API",           "qty": "1", "price": 0,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Navegación por teclado",              "desc": "Soporte completo de navegación y activación de controles mediante teclado",              "qty": "1", "price": 0,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Compatibilidad con lectores de pantalla", "desc": "Atributos ARIA, semántica HTML correcta y etiquetas alt en todas las imágenes",     "qty": "1", "price": 0,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Subtítulos en videos",                "desc": "Soporte para archivos de subtítulos (.vtt) en reproductores de video del portal",        "qty": "1", "price": 0,  "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 04",
+      "notes": [
+        "La accesibilidad no es un módulo opcional con un costo determinado: es parte del ADN del portal. Por lo tango, se itemiza de forma separada para transparentar la importancia que tiene.",
+        "El cumplimiento WCAG 2.1 AA es una meta de diseño. Se realizará una auditoría de accesibilidad al finalizar el desarrollo."
+      ]
+    },
+    {
+      "id": "distribution",
+      "num": "05",
+      "title": "Difusión y Distribución de Contenidos",
+      "desc": "Implementación de los mecanismos de distribución del contenido publicado en el portal hacia otros canales digitales: redes sociales, suscriptores, lectores de feeds y buscadores. El objetivo es maximizar el alcance de cada publicación con el mínimo esfuerzo operativo del equipo editorial.",
+      "table_title": "DIFUSIÓN Y DISTRIBUCIÓN",
+      "items": [
+        { "name": "Open Graph y metadata social",        "desc": "Cada artículo genera automáticamente imagen, título y descripción optimizados para compartir en redes sociales (Facebook, WhatsApp, LinkedIn, X/Twitter)", "qty": "1", "price": 30000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Botones de compartir",                "desc": "Botones de compartir por artículo hacia redes sociales principales y por WhatsApp",       "qty": "1", "price": 15000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Feed RSS",                            "desc": "Feed RSS automático del portal para suscriptores y agregadores de contenido",             "qty": "1", "price": 20000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Newsletter (suscripción por email)",  "desc": "Formulario de suscripción y envío automático de novedades por email a suscriptores al publicarse contenido nuevo (integración con Mailchimp o Brevo)", "qty": "1", "price": 40000, "show": true, "exclude_from_subtotal": false },
+        { "name": "SEO técnico",                         "desc": "Sitemap XML, robots.txt, metadatos estructurados (Schema.org) y optimización para buscadores", "qty": "1", "price": 20000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Integración con Google Search Console", "desc": "Alta y verificación del portal en Google Search Console para seguimiento de indexación", "qty": "1", "price": 10000, "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 05",
+      "notes": [
+        "La difusión en redes sociales es automática a nivel técnico (Open Graph, links para compartir). La gestión de cuentas de redes sociales institucionales de la UNPA–UASJ queda fuera del alcance de esta propuesta.",
+        "El servicio de envío de newsletters (Mailchimp o Brevo) tiene plan gratuito hasta cierto volumen de suscriptores."
+      ]
+    },
+    {
+      "id": "analytics",
+      "num": "06",
+      "title": "Módulo de Métricas y Analytics",
+      "desc": "Implementación de un sistema de seguimiento del comportamiento de los visitantes del portal y configuración de un panel de métricas accesible para el equipo de la UNPA–UASJ. Permite conocer el impacto real de cada publicación, el origen del tráfico, las áreas más consultadas y la evolución del portal en el tiempo.",
+      "table_title": "MÉTRICAS Y ANALYTICS",
+      "items": [
+        { "name": "Implementación Google Analytics 4",   "desc": "Instalación, configuración de eventos y objetivos de conversión en el portal",           "qty": "1", "price": 30000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Panel de métricas personalizado",     "desc": "Dashboard simplificado embebido en el CMS con métricas clave: visitas, artículos más leídos, tiempo en página, origen del tráfico, ubicación geográfica de visitantes", "qty": "1", "price": 80000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Métricas por pieza de contenido",     "desc": "Cada artículo/infografía/podcast muestra su contador de visitas y compartidos",          "qty": "1", "price": 30000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Plausible Analytics (alternativa privacy-first)", "desc": "Opción alternativa a GA4: analytics sin cookies, sin rastreo de usuarios, cumple GDPR/privacidad. Costo de servicio ~$9 USD/mes.", "qty": "1", "price": 5000, "show": true, "exclude_from_subtotal": true, "exclude_from_total": true }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 06",
+      "notes": [
+        "El panel de métricas es de acceso exclusivo para el equipo de la UNPA–UASJ, con login propio.",
+        "Se recomienda evaluar Plausible Analytics como alternativa a Google Analytics 4 por su modelo de privacidad más respetuoso con los visitantes y su simplicidad de uso. Su costo mensual es de $9 USD/mes aprox."
+      ]
+    },
+    {
+      "id": "infra",
+      "num": "07",
+      "title": "Infraestructura, Deploy y Capacitación",
+      "desc": "Configuración del entorno de producción, deploy del portal y del panel de administración, configuración de dominio y SSL, y capacitación del equipo editorial de la UNPA–UASJ para gestionar el contenido de forma autónoma.",
+      "table_title": "INFRAESTRUCTURA, DEPLOY Y CAPACITACIÓN",
+      "items": [
+        { "name": "Setup de infraestructura",            "desc": "Configuración de hosting, dominio, certificados SSL y entornos (staging + producción)",  "qty": "1", "price": 15000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Deploy del portal y CMS",             "desc": "Deploy del portal público y del panel de administración en servidor cloud",     "qty": "1", "price": 10000,  "show": true, "exclude_from_subtotal": false },
+        { "name": "Capacitación equipo (BONIFICADA 100%)",       "desc": "2 sesiones de capacitación para el uso del panel de administración y publicación de contenidos", "qty": "2", "price": 0, "show": true, "exclude_from_subtotal": false },
+        { "name": "Manual de usuario (CMS)",             "desc": "Guía paso a paso para el equipo: crear, editar, publicar y gestionar contenidos",        "qty": "1", "price": 8000,  "show": true, "exclude_from_subtotal": false }
+      ],
+      "billing_type": "fixed",
+      "subtotal_label": "Subtotal Módulo 07",
+      "notes": [
+        "El hosting del CMS puede alojarse en Vercel, Railway, Render o en los servidores de la UNPA–UASJ si la institución lo requiere.",
+        "El hosting del portal público tiene plan gratuito disponible para proyectos de esta escala y puede mantenerse así para un volumen de tráfico no muy elevado. En caso de crecimiento significativo del tráfico, se evaluará un upgrade del plan de hosting.",
+        "Si la universidad requiere alojamiento en sus propios servidores o en hosting argentino (ej. Donweb), el setup puede adaptarse sin cambios en el desarrollo."
+      ]
+    }
+  ],
+
+  "optional_modules": [
+    {
+      "id": "community_management",
+      "title": "Módulo Opcional: Gestión de Redes Sociales",
+      "desc": "Servicio mensual de community management para las redes sociales del proyecto 'San Julián Hace Ciencia': redacción de posts adaptados de cada publicación, calendario editorial, publicación y seguimiento de interacciones.",
+      "price_monthly": 150,
+      "note": "A convenir según volumen de publicaciones y plataformas (Instagram, Facebook, X/Twitter, LinkedIn)."
+    },
+    {
+      "id": "interactive_infographics",
+      "title": "Módulo Opcional: Infografías Interactivas",
+      "desc": "Desarrollo de infografías interactivas a medida: mapas del territorio con datos, líneas de tiempo navegables, gráficos con filtros dinámicos. Cotización por pieza según complejidad.",
+      "price_per_unit": "a cotizar por pieza",
+      "note": "Las infografías estáticas (imágenes) están incluidas en el CMS. Las interactivas son desarrollos a medida que se cotizan por separado."
+    },
+    {
+      "id": "subdomain_unpa",
+      "title": "Módulo Opcional: Integración como Subdominio UNPA",
+      "desc": "Si la institución requiere alojar el portal como subdominio del sitio oficial de la UNPA–UASJ (ej. ciencia.uasj.unpa.edu.ar), se realizará la coordinación técnica con el área de sistemas de la universidad para la configuración de DNS y certificados.",
+      "price": 30,
+      "note": "Requiere acceso y colaboración del área de sistemas de la UNPA–UASJ."
+    }
+  ],
+
+  "totals": {
+    "subtotal":   { "label": "Subtotal desarrollo (módulos 01 a 07)", "value": 0 },
+    "discount":   { "label": "Sin descuento aplicado (nuevo cliente)", "percent": 0 },
+    "total":      { "label": "TOTAL DESARROLLO INICIAL", "value": 0 },
+    "extras":            { "label": "Extras primer mes",                "value": 0 },
+    "notes": [
+      "Soporte técnico post-lanzamiento: 90 días incluidos sin costo adicional.",
+      "A partir del día 91, si se requiere soporte adicional, se aplicarán los costos correspondientes.",
+      "El plan de mantenimiento (soporte técnico) garantiza el correcto funcionamiento técnico del sistema. El contenido editorial (redacción, carga de artículos, publicación) es responsabilidad del equipo de la UNPA–UASJ."
+    ]
+  },
+
+  "conditions": [
+    { "key": "Forma de pago",       "value": "50% al inicio (Módulo 01) · 50% al finalizar el resto de los módulos y realizar la entrega final" },
+    { "key": "Plazo estimado",      "value": "3 a 4 semanas desde la aprobación del relevamiento funcional" },
+    { "key": "Metodología",         "value": "Desarrollo iterativo por módulos con entregables parciales y aprobación del cliente en cada etapa" },
+    { "key": "Revisiones",          "value": "2 rondas de revisión incluidas por módulo" },
+    { "key": "Stack tecnológico",   "value": "Next.js (React) / Headless CMS / Node.js · Deploy en Vercel + hosting CMS a definir según requerimientos institucionales" },
+    { "key": "Hosting",             "value": "El portal público puede alojarse en Vercel (plan gratuito disponible). El CMS puede alojarse en cloud externo o en los servidores de la UNPA–UASJ según prefiera la institución. En cualquier caso, el costo corre por parte de la institución." },
+    { "key": "Dominio",             "value": "A definir: dominio propio (ej. sanjulianhaciencia.com.ar) o subdominio UNPA–UASJ. La gestión y costo del dominio es a cargo del cliente." },
+    { "key": "Validez",             "value": "Esta propuesta tiene validez de 30 días desde su emisión (Junio 2026)" }
+  ]
+}
