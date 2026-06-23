@@ -115,7 +115,7 @@
       "table_title": "PORTAL PÚBLICO",
       "items": [
         { "name": "Diseño visual (UI/UX)",               "desc": "Diseño de identidad visual del portal, sistema de componentes y guía de estilos",        "qty": "1", "price": 50000, "show": true, "exclude_from_subtotal": false },
-        { "name": "Desarrollo del portal",     "desc": "Desarrollo frontend completo: inicio, áreas temáticas, artículos, buscador, novedades", "qty": "1", "price": 90000, "show": true, "exclude_from_subtotal": false },
+        { "name": "Desarrollo del portal",     "desc": "Desarrollo frontend completo: inicio, áreas temáticas, artículos, buscador, novedades. Tradución en tiempo real del contenido a otros idiomas.", "qty": "1", "price": 90000, "show": true, "exclude_from_subtotal": false },
         { "name": "Integración con CMS (API)",           "desc": "Conexión del portal con el CMS para mostrar contenido en tiempo real",                   "qty": "1", "price": 20000,  "show": true, "exclude_from_subtotal": false },
         { "name": "Buscador de contenidos",              "desc": "Buscador por palabra clave con filtros por área temática y tipo de contenido",           "qty": "1", "price": 30000,  "show": true, "exclude_from_subtotal": false },
         { "name": "Página de cada pieza de contenido",   "desc": "Vista detallada de artículo, infografía, podcast, video o material didáctico con metadata, autor y área", "qty": "1", "price": 60000, "show": true, "exclude_from_subtotal": false }
