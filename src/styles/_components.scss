@@ -1,8 +1,13 @@
 @use 'tokens' as *;
 
 // ── Custom cursor ─────────────────────────────────────────────
-#cur  { position:fixed; width:10px; height:10px; background:var(--sienna); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .2s,height .2s; }
-#ring { position:fixed; width:36px; height:36px; border:1px solid rgba(192,98,58,.35); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .2s,height .2s; }
+#cur {
+  position:fixed; top:0; left:0; width:24px; height:26px;
+  pointer-events:none; z-index:9999;
+  filter:drop-shadow(0 1px 3px rgba(0,0,0,.35));
+  svg { display:block; width:100%; height:100%; transition:transform .15s ease; }
+  &.is-hover svg { transform:scale(1.35); }
+}
 
 // ── Nav ───────────────────────────────────────────────────────
 .p-nav {
