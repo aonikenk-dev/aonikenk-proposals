@@ -254,6 +254,6 @@
     { "key": "Stack tecnológico",   "value": "Next.js (React) / Headless CMS / Node.js · Deploy en Vercel + hosting CMS a definir según requerimientos institucionales" },
     { "key": "Hosting",             "value": "El portal público puede alojarse en Vercel (plan gratuito disponible). El CMS puede alojarse en cloud externo o en los servidores de la UNPA–UASJ según prefiera la institución. En cualquier caso, el costo corre por parte de la institución." },
     { "key": "Dominio",             "value": "A definir: dominio propio (ej. sanjulianhaciencia.com.ar) o subdominio UNPA–UASJ. La gestión y costo del dominio es a cargo del cliente." },
-    { "key": "Validez",             "value": "Esta propuesta tiene validez de 30 días desde su emisión (Junio 2026)" }
+    { "key": "Validez",             "value": "Esta propuesta tiene validez de 30 días desde su emisión (Agosto 2026)" }
   ]
 }
